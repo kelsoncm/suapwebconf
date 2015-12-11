@@ -21,7 +21,19 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
-__author__ = 'Kelson da Costa Medeiros <kelsoncm@gmail.com>'
 from django.contrib import admin
+from suap_webconf.models import Sala, Evento
 
-# Register your models here.
+__author__ = 'Kelson da Costa Medeiros <kelsoncm@gmail.com>'
+
+
+class SalaAdmin(admin.ModelAdmin):
+    pass
+
+
+class EventoAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(Sala, SalaAdmin)
+admin.site.register(Evento, EventoAdmin)

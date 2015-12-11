@@ -21,8 +21,11 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
-from django.shortcuts import render
+from django.conf.urls import url
+from django.contrib import admin
 
 __author__ = 'Kelson da Costa Medeiros <kelsoncm@gmail.com>'
 
-# Create your views here.
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+]
