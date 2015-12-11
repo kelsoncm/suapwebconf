@@ -46,4 +46,4 @@ class Evento(models.Model):
     hora_termino = models.TimeField('Término do evento', null=False)
     responsavel = models.CharField('Nome responsável pelo evento', max_length=255, null=False, blank=False)
     forma_autenticacao = models.CharField('Nome responsável pelo evento', max_length=255, null=False, blank=False)
-    sala = models.ForeignKey('suap_webconf.Sala', verbose_name='Sala', null=False)
+    sala = models.ForeignKey('suapwebconf.Sala', verbose_name='Sala', null=False)

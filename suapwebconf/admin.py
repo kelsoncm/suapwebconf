@@ -22,7 +22,7 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 from django.contrib import admin
-from suap_webconf.models import Sala, Evento
+from suapwebconf.models import Sala, Evento
 
 __author__ = 'Kelson da Costa Medeiros <kelsoncm@gmail.com>'
 

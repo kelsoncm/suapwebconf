@@ -28,4 +28,4 @@ __author__ = 'Kelson da Costa Medeiros <kelsoncm@gmail.com>'
 
 
 class SuapWebconfConfig(AppConfig):
-    name = 'suap_webconf'
+    name = 'suapwebconf'
