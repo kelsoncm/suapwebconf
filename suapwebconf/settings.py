@@ -39,11 +39,19 @@ DEFAULT_APPS = [
     'django.contrib.staticfiles',
 ]
 
+THIRD_APPS = [
+    'django_extensions',
+    # 'bootstrap_admin',
+    # 'django_admin_bootstrapped',
+    # 'bootstrap_admin_feincms',
+    # 'django_sb_admin',
+]
+
 MY_APPS = [
     'suapwebconf',
 ]
 
-INSTALLED_APPS = MY_APPS + DEFAULT_APPS
+INSTALLED_APPS = MY_APPS + THIRD_APPS + DEFAULT_APPS
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -125,3 +133,51 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#
+# from django.conf import global_settings
+# TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + [
+#     'django.core.context_processors.request',
+# ]
+# BOOTSTRAP_ADMIN_SIDEBAR_MENU = True
+#
+# TEMPLATES = [
+#     {
+#         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+#         'DIRS': [
+#             # insert your TEMPLATE_DIRS here
+#         ],
+#         'APP_DIRS': True,
+#         'OPTIONS': {
+#             'context_processors': [
+#                 # Insert your TEMPLATE_CONTEXT_PROCESSORS here or use this
+#                 # list if you haven't customized them:
+#                 'django.template.context_processors.debug',
+#                 'django.template.context_processors.request'
+#                 'django.contrib.auth.context_processors.auth',
+#                 'django.contrib.messages.context_processors.messages',
+#                 'django.template.context_processors.i18n',
+#                 'django.template.context_processors.media',
+#                 'django.template.context_processors.static',
+#                 'django.template.context_processors.tz',
+#             ]
+#         },
+#     },
+# ]
+#
+#
+# TEMPLATES = [
+#     {
+#         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+#         'DIRS': [],
+#         'APP_DIRS': True,
+#         'OPTIONS': {
+#             'context_processors': [
+#                 'django.template.context_processors.debug',
+#                 'django.template.context_processors.request',
+#                 'django.contrib.auth.context_processors.auth',
+#                 'django.contrib.messages.context_processors.messages',
+#             ],
+#         },
+#     },
+# ]

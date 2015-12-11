@@ -21,6 +21,6 @@
 #
 # @author 'Kelson da Costa Medeiros <kelsoncm@gmail.com>'
 Django==1.9
-bootstrap-admin==0.3.6
+# bootstrap-admin==0.3.6
 ipython
 django-extensions

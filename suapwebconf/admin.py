@@ -21,8 +21,10 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
+from __future__ import unicode_literals
 from django.contrib import admin
-from suapwebconf.models import Sala, Evento
+from django.utils.html import format_html
+from suapwebconf.models import Sala, Evento, Participante, Acesso
 
 __author__ = 'Kelson da Costa Medeiros <kelsoncm@gmail.com>'
 
@@ -31,9 +33,35 @@ class SalaAdmin(admin.ModelAdmin):
     pass
 
 
+class ParticipanteInline(admin.TabularInline):
+    model = Participante
+
+
 class EventoAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['nome', 'sala', 'data_evento', 'hora_inicio', 'hora_termino', 'responsavel', 'forma_autenticacao',
+                    'show_url', ]
+    inlines = [ParticipanteInline, ]
+
+    def show_url(self, obj):
+        return format_html("<a href='/admin/suapwebconf/participante/?evento__nome={nome}'>Gerenciar participantes</a>", nome=obj.nome)
+
+    show_url.allow_tags = True
+
+
+class ParticipanteAdmin(admin.ModelAdmin):
+    list_display = ['nome', 'evento', 'login', 'identificacao', 'email', 'celular', ]
+    list_filter = ('evento__nome', )
+
+    def show_url(self, obj):
+        return format_html("<a href='/admin/participantes/{id}/'>Gerenciar participantes</a>", id=obj.id)
+
+
+class AcessoAdmin(admin.ModelAdmin):
+    list_display = ['participante', 'quando', ]
+    list_filter = ('participante__id', )
 
 
 admin.site.register(Sala, SalaAdmin)
 admin.site.register(Evento, EventoAdmin)
+admin.site.register(Participante, ParticipanteAdmin)
+admin.site.register(Acesso, AcessoAdmin)
