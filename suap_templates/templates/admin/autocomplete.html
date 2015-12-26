@@ -1,0 +1,88 @@
+{% load firstof from future %}
+{# Template criado para que list_filter seja renderizado como um <input>, não como um <select><ul><li><a> #}
+<script src='/static/djtools/jquery/jquery.autocomplete.js'></script>
+<script src='/static/comum/js/controlurlparams.js'></script>
+<div class="filter">
+    <label for="ac_{{ choices.0.parameter_name }}">Filtrar por {{ title }}:</label>
+    <input type="text" name="{{ choices.0.parameter_name }}" id="ac_{{ choices.0.parameter_name }}"
+       class="{% if choices.0.selected %}filled{% endif %} autocomplete" current_value="" search_url="{{ choices.0.url }}" 
+       style='width:200px !important;'/>
+       
+    <input type="hidden" id="hidden_{{ choices.0.parameter_name }}" 
+       name="{{ choices.0.parameter_name }}" value="{{ choices.0.value }}" />
+
+</div>
+
+<script type="text/javascript">
+    var options = {% firstof options  '{"autoFill": true, "minChars": 2, "scroll": true, "extraParams": {}}' %};
+    
+    // remove o label do campo
+    function set_value(input, selected, value) {
+        /*
+         * ``data`` formats:
+         * 1) ["label", 1]
+         * 2) ["<strong>HTML label</strong>", "label", 1]
+         */
+        value = selected.data[selected.data.length-1];
+        input.next().val(value);
+        input.next().next().show(); // Mostrar "limpar valor"
+        input.addClass('filled');
+        input.attr("current_value", value);
+    }
+    function clean_value(input) {
+        input.val('');
+        input.next().val('');
+        input.removeClass('filled');
+        input.next().next().hide(); // Esconder "limpar valor"
+        input.focus();
+    }
+    function afterSelect_{{choices.0.parameter_name}}(object) {
+        set_value(object.input, object.data, {%if not choices.0.value %}''{% else %}'{{choices.0.value}}'{% endif %});
+        insertParam('{{choices.0.parameter_name}}', $('input#hidden_{{choices.0.parameter_name}}').val());
+    }
+    options["afterSelect"] = afterSelect_{{choices.0.parameter_name}};
+    $.ajaxSetup( { type: "POST" } );
+    $('input#ac_{{choices.0.parameter_name}}').autocomplete('{{ choices.0.url }}', options);
+    $('input#ac_{{choices.0.parameter_name}}').keyup(function(){
+        if (!$(this).val().length) {
+            clean_value($(this));
+            removeParam("{{choices.0.parameter_name}}");
+        }
+    });
+    
+    function setValue(input_label, pk) {
+        if (input_label.attr("fetching") == "true") {
+            return;
+        }
+        input_label.attr("fetching", "true"); 
+        $.ajax({
+            type: "POST",
+            url: input_label.attr("search_url"),
+            data: {pk : pk},
+            success: function(data) {
+                input_label.val(data);
+                input_label.next().next("img").show();
+                input_label.attr("current_value", pk);
+                input_label.addClass("filled");
+                input_label.attr("fetching", "false");
+            },
+            error: function() {
+                input_label.val("");
+                input_label.next().next("img").hide();
+                input_label.attr("current_value", "");
+                input_label.removeClass("filled");
+                input_label.attr("fetching", "false");
+            }
+        });
+    }
+    function check() {
+        $.each($(".ac_input"), function(index, elem) {
+            input_label = $(elem);
+            input_hidden = input_label.next();
+            if ((input_hidden.val() != "") && (input_hidden.val() != "None") && (input_label.attr("current_value") != input_hidden.val())) {
+                setValue(input_label, input_hidden.val());
+            }
+        });
+    }
+    timeout = window.setInterval(check, 1000);
+</script>

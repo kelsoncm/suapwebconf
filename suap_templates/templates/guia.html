@@ -1,0 +1,2263 @@
+{% extends super_template %}
+
+{% block bodyclass %} guia{% endblock %}
+
+{% block content %}
+
+<ol class="ancoras">
+    <li><a href="#guia-6">Codificação</a></li>
+    <li><a href="#guia-1">Tipografia</a></li>
+    <li><a href="#guia-2">Botões e Ações</a></li>
+    <li><a href="#guia-3">Tabelas</a></li>
+    <li><a href="#guia-4">Formulários</a></li>
+    <li><a href="#guia-5">Navegação</a></li>
+    <li><a href="#guia-7">Mensagens</a></li>
+    <li>
+        <span>Template Tags</span>
+        <ul>
+            <li><a href="#guia-9-1">Caixa de Informações</a></li>
+            <li><a href="#guia-9-2">Popup com Dados do Usuário</a></li>
+        </ul>
+    </li>
+    <li>
+        <span>Componentes</span>
+        <ul>
+            <li><a href="#guia-11-3">Caixa com Informações de Pessoa</a></li>
+            <li><a href="#guia-11-1">Barra de Busca e Filtros</a></li>
+            <li><a href="#guia-11-5">Gráficos</a></li>
+            <li><a href="#guia-11-6">Âncoras</a></li>
+            <li><a href="#guia-11-7">Barra de Progresso</a></li>
+            <li><a href="#guia-11-4">Calendário</a></li>
+            <li><a href="#guia-11-8">Timeline</a></li>
+            <li><a href="#guia-11-9">Timeline Horizontal</a></li>
+            <li><a href="#guia-11-2">Tela Master/Detail</a></li>
+        </ul>
+    </li>
+    <li><a href="#guia-8">Acessibilidade</a></li>
+</ol>
+
+<p class="com_ancora msg info">
+    Este guia de desenvolvimento compreende uma lista de regras que orientam a criação de páginas e funcionalidades para o SUAP,
+    assim, tem o propósito de fornecer as diretrizes (relativas a CSS3, HTML5 e a linguagem de template para Django para disposição de elementos de leiaute,
+    tipografia, formulários, botões/links, tabelas, grids, navegação, entre outros) com o objetivo de manter uma identidade visual
+    padrão para todos as páginas do sistema.
+</p>
+
+<div class="com_ancora" id="guia-6">
+    {% box "Codificação" %}
+        <h4>Padrões de Escrita</h4>
+        <ul>
+            <li>Utilizar <strong>4 espaços</strong> ao invés de <strong>tabs</strong>;</li>
+            <li>Acrescentar em <strong>todas</strong> as strings o Unicode. Ex.: u'Texto'</li>
+            <li>Manter títulos e labels sempre com as <strong>iniciais maiúsculas</strong>;</li>
+            <li>Pontuar corretamente todas as mensagens direcionadas ao usuário;</li>
+            <li>O verbose_name de um campo no models deve possuir como primeiro atributo a string com o título do campo, exceto quando o tipo for ForeignKey. Ex.: nome = models.CharField(u'Nome')</li>
+        </ul>
+
+        <h4>Recomendações de Nomenclaturas</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Recomendado</th>
+                    <th>Não Recomendado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Adicionar</td>
+                    <td><strike>Cadastrar</strike></td>
+                </tr>
+                <tr>
+                    <td>Editar</td>
+                    <td><strike>Atualizar</strike></td>
+                </tr>
+                <tr>
+                    <td>Remover</td>
+                    <td><strike>Excluir</strike>, <strike>Apagar</strike></td>
+                </tr>
+                <tr>
+                    <td>Visualizar</td>
+                    <td><strike>Ver</strike>, <strike>Abrir</strike></td>
+                </tr>
+            </tbody>
+        </table>
+            
+        <h4>Instruções de CSS e HTML</h4>
+        <ul>
+            <li><strong>Não</strong> utilizar o atributo <code>style</code> em tags HTML;</li>
+            <li><strong>Não</strong> adicionar CSS ou Javascript diretamente no código HTML;</li>
+            <li><strong>Evitar</strong> utilizar as seguintes tags <code>br</code> e <code>hr</code>;</li>
+            <li><strong>Não</strong> utilizar as seguintes tags <code>center</code>, <code>font</code> e <code>u</code>, pois todas encontram-se depreciadas no HTML5;</li>
+        </ul>
+    {% endbox %}
+</div>
+
+<div class="com_ancora" id="guia-1">
+    {% box "Tipografia" %}
+        <h4>Títulos</h4>
+        <p>Toda página deve possuir apenas uma tag <code>h2</code>, que corresponde ao título da página. Visto que a tag <code>h1</code> corresponde ao título do sistema, e deve ser encontrada via template, no topo.</p>
+        <p>Para montar uma hierarquia de títulos deve-se trabalhar hierarquicamente com <code>h3</code>, <code>h4</code>, em diante.</p>
+       
+        <h4>Tags</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tag</th>
+                    <th>Descrição</th>
+                    <th>Utilizar em</th>
+                    <th>Exemplo</th>
+                    <th>Código</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>a</code></td>
+                    <td>Para links.</td>
+                    <td>Qualquer palavra ou conjunto de palavras.</td>
+                    <td><a href="#">Consulte as informações solicitadas pelo servidor</a>.</td>
+                    <td>
+<pre>
+&lt;a href="#"&gt;Consulte as informações solicitadas pelo servidor&lt;/a&gt;.  
+</pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>abbr</code></td>
+                    <td>Para abreviações ou acrônimos.</td>
+                    <td>Qualquer palavra ou conjunto de palavras.</td>
+                    <td>O servidor do setor <abbr title="Coordenação de Sistema de Informação">COSINF</abbr> não forneceu as informações solicitadas.</td>
+                    <td>
+<pre>
+O servidor do setor &lt;abbr title="Coordenação de Sistema de Informação"&gt;COSINF&lt;/abbr&gt; não forneceu as informações solicitadas.
+</pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>b</code></td>
+                    <td>Para texto estilisticamente deslocado, ou seja, cuja atenção deva ser direcionada para fins utilitários sem convencionar uma importância, voz alternativa ou humor, como palavras-chave do resumo de um documento, nomes dos produtos em uma review, palavras acionáveis ​​em software orientado a texto interativo etc.</td>
+                    <td>Qualquer palavra ou conjunto de palavras em um elemento de texto.</td>
+                    <td><b>O servidor</b> não forneceu as informações solicitadas.</td>
+                    <td>
+<pre>
+&lt;b&gt;O servidor&lt;/b&gt; não forneceu as informações solicitadas.    
+</pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>dl</code>, <code>dt</code> e <code>dd</code></td>
+                    <td>Para lista definida de informações.</td>
+                    <td>Quaisquer informações em formato "Termo": "Descrição".</td>
+                    <td>
+                        <dl>
+                            <dt>Nome:</dt>
+                            <dd>Lorem Ipsum</dd>
+                            <dt>E-mail:</dt>
+                            <dd>loremipsum@loremipsum.com.br</dd>
+                            <dt>Telefone:</dt>
+                            <dd>(99) 9999-9999</dd>
+                        </dl>
+                    </td>
+                    <td>
+<pre>
+&lt;dl&gt;
+    &lt;dt&gt;Nome:&lt;/dt&gt;
+    &lt;dd&gt;Lorem Ipsum&lt;/dd&gt;
+    &lt;dt&gt;E-mail:&lt;/dt&gt;
+    &lt;dd&gt;loremipsum@loremipsum.com.br&lt;/dd&gt;
+&lt;/dl&gt;  
+</pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>em</code></td>
+                    <td>Expressa ênfase no texto, ou seja, alguma coisa que você pronunciaria de forma diferente.</td>
+                    <td>Qualquer palavra ou conjunto de palavras em um elemento de texto.</td>
+                    <td>O servidor <em>não</em> forneceu as informações solicitadas!</td>
+                    <td>
+<pre>
+O servidor &lt;em&gt;não&lt;/em&gt; forneceu as informações solicitadas!   
+</pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>i</code></td>
+                    <td>Para texto em voz alternativa ou humor alternativo ou de outra forma deslocada da prosa normal, de uma forma que indique uma qualidade diferente de texto, como palavras estrangeiras ou traduzidas, denominação taxonómica, pensamentos, termos técnicos e texto tipograficamente itálico.</td>
+                    <td>Qualquer palavra ou conjunto de palavras em um elemento de texto.</td>
+                    <td>O servidor não forneceu as informações solicitadas pelo <i>software</i>.</td>
+                    <td>
+<pre>
+O servidor não forneceu as informações solicitadas pelo &lt;i&gt;software&lt;/i&gt;.    
+</pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>ol</code>, <code>ul</code> e <code>li</code></td>
+                    <td>Para listas.</td>
+                    <td>Quaisquer informações em formato de lista numerada ou não.</td>
+                    <td>
+                        <ol>
+                            <li>Um</li>
+                            <li>Dois</li>
+                            <li>Três</li>
+                            <li>Quatro</li>
+                            <li>Cinco</li>
+                        </ol>
+                    </td>
+                    <td>
+<pre>
+&lt;ol&gt;
+    &lt;li&gt;Um&lt;/li&gt;
+    &lt;li&gt;Dois&lt;/li&gt;
+    &lt;li&gt;Três&lt;/li&gt;
+    &lt;li&gt;Quatro&lt;/li&gt;
+    &lt;li&gt;Cinco&lt;/li&gt;
+&lt;/ol&gt;  
+</pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>p</code></td>
+                    <td>Elemento de parágrafo.</td>
+                    <td>Qualquer pedaço de texto ou parágrafo.</td>
+                    <td><p>O servidor não forneceu as informações solicitadas.</p></td>
+                    <td>
+<pre>
+&lt;p&gt;O servidor não forneceu as informações solicitadas.&lt;/p&gt;
+</pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>s</code></td>
+                    <td>Representa conteúdo que não é mais relevante ou preciso.</td>
+                    <td>Qualquer palavra ou conjunto de palavras em um elemento de texto.</td>
+                    <td>
+                        <p><s>O servidor não forneceu as informações solicitadas.</s></p>
+                        <p>O servidor forneceu as informações solicitadas.</p>
+                    <td>
+<pre>
+&lt;s&gt;O servidor não forneceu as informações solicitadas.&lt;/s&gt; 
+</pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>small</code></td>
+                    <td>Usado para comentários laterais ou letras pequenas.</td>
+                    <td>Qualquer palavra ou conjunto de palavras em um elemento de texto.</td>
+                    <td>O servidor forneceu as informações solicitadas - <small>em 15/07/2014</small>.<td>
+<pre>
+O servidor não forneceu as informações solicitadas - &lt;small&gt;em 15/07/2014&lt;/small&gt;.
+</pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>strong</code></td>
+                    <td>Para definir forte importância.</td>
+                    <td>Qualquer palavra ou conjunto de palavras em um elemento de texto.</td>
+                    <td>O servidor <strong>não</strong> forneceu as informações solicitadas.</td>
+                    <td>
+<pre>
+O servidor &lt;strong&gt;não&lt;/strong&gt; forneceu as informações solicitadas.    
+</pre>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Template Tags</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Descrição</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>text_small</td>
+                    <td>Engloba a variável com a tag <code>small</code> que customiza o texto de forma a diferenciá-lo do texto inline, como forma de comentário lateral.</td>
+                </tr>
+                <tr>
+                    <td>status</td>
+                    <td>Engloba a variável com uma <code>span</code> com as classes <code>span span-"variavel"</code>.</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h4>Classes Funcionais</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Classe</th>
+                    <th>Descrição</th>
+                    <th>Utilizar em</th>
+                    <th>Exemplos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>.align-center</code></td>
+                    <td>Para centralizar texto ou conteúdo</td>
+                    <td>Restrito a elementos vinculados a conteúdos, como texto, formulários, tabelas etc.</td>
+                    <td class="align-center">Lorem ipsum dolor sit amet.</td>
+                </tr>
+                <tr>
+                    <td><code>.align-right</code></td>
+                    <td>Para alinhar texto ou conteúdo à direita</td>
+                    <td>Restrito a elementos vinculados a conteúdos, como texto, formulários, tabelas etc.</td>
+                    <td class="align-right">Lorem ipsum dolor sit amet.</td>
+                </tr>
+                <tr>
+                    <td><code>.capitalize</code></td>
+                    <td>Para deixar somente as iniciais em maiúsculo.</td>
+                    <td>Qualquer elemento de texto.</td>
+                    <td class="capitalize">Lorem ipsum dolor sit amet.</td>
+                </tr>
+                <tr>
+                    <td><code>.disabled</code></td>
+                    <td>Para texto em cinza.</td>
+                    <td>Qualquer elemento de texto.</td>
+                    <td class="disabled">Lorem ipsum dolor sit amet.</td>
+                </tr>
+                <tr>
+                    <td><code>.false</code></td>
+                    <td>Para texto em vermelho.</td>
+                    <td>Qualquer elemento de texto.</td>
+                    <td class="false">Lorem ipsum dolor sit amet.</td>
+                </tr>
+                <tr>
+                    <td><code>.float-left</code></td>
+                    <td>Flutuar conteúdo para esquerda.</td>
+                    <td>Qualquer elemento de conteúdo.</td>
+                    <td><span class="status status-error">Não se aplica.</span></td>
+                </tr>
+                <tr>
+                    <td><code>.float-right</code></td>
+                    <td>Flutuar conteúdo para direita.</td>
+                    <td>Qualquer elemento de conteúdo.</td>
+                    <td><span class="status status-error">Não se aplica.</span></td>
+                </tr>
+                <tr>
+                    <td><code>.img-inside-container</code></td>
+                    <td>Para limitar a altura e largura de imagens a, no máximo, 60 pixels.</td>
+                    <td>Somente imagens.</td>
+                    <td><img src="/static/comum/img/default.jpg" class="img-inside-container" /></td>
+                </tr>
+                <tr>
+                    <td><code>.italico</code></td>
+                    <td>Para estilizar texto com itálico.</td>
+                    <td>Qualquer elemento de texto.</td>
+                    <td class="italico">Lorem ipsum dolor sit amet.</td>
+                </tr>
+                <tr>
+                    <td><code>.lista-inline</code></td>
+                    <td>Para gerar uma lista em linha.</td>
+                    <td><code>&lt;ul&gt;</code></td>
+                    <td><span class="status status-error">Não se aplica.</span></td>
+                </tr>
+                <tr>
+                    <td><code>.lista-simples</code></td>
+                    <td>Para estilizar lista definida simples à direita da página, com destaque para a segunda informação.</td>
+                    <td><code>&lt;dl&gt;</code></td>
+                    <td><span class="status status-error">Não se aplica.</span></td>
+                </tr>
+                <tr>
+                    <td><code>.negrito</code></td>
+                    <td>Para estilizar texto com negrito.</td>
+                    <td>Qualquer elemento de texto.</td>
+                    <td class="negrito">Lorem ipsum dolor sit amet.</td>
+                </tr>
+                <tr>
+                    <td><code>.obs</code></td>
+                    <td>Para texto com observações.</td>
+                    <td>Qualquer elemento de texto, geralmente abaixo de conteúdo de destaque.</td>
+                    <td><span class="status status-error">Não se aplica.</span></td>
+                </tr>
+                <tr>
+                    <td><code>.oculto</code></td>
+                    <td>Para ocultar o elemento.</td>
+                    <td>Qualquer elemento.</td>
+                    <td><span class="status status-error">Não se aplica.</span></td>
+                </tr>
+                <tr>
+                    <td><code>.text-nowrap</code></td>
+                    <td>Para não permitir que texto dê quebra de linha.</td>
+                    <td>Qualquer elemento de texto (prefencialmente com poucas palavras) ou célula de tabela.</td>
+                    <td class="text-nowrap">Lorem ipsum dolor sit amet.</td>
+                </tr>
+                <tr>
+                    <td><code>.text-nowrap-normal</code></td>
+                    <td>Para permitir que texto dê quebra de linha.</td>
+                    <td>Qualquer elemento de texto (prefencialmente com poucas palavras) ou célula de tabela.</td>
+                    <td class="text-nowrap-normal">Lorem ipsum dolor sit amet.</td>
+                </tr>
+                <tr>
+                    <td><code>.true</code></td>
+                    <td>Para texto em verde.</td>
+                    <td>Qualquer elemento de texto.</td>
+                    <td class="true">Lorem ipsum dolor sit amet.</td>
+                </tr>
+            </tbody>
+        </table>
+    {% endbox %}
+</div>        
+
+<div class="com_ancora" id="guia-2">
+    {% box 'Botões e Ações' %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Botão</th>
+                    <th>Classe</th>
+                    <th>Descrição</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a class="btn success" href="#">Confirmação</a></td>
+                    <td><code>btn success</code></td>
+                    <td>Para ações com significado de aceitar/receber/confirmar.</td>
+                </tr>
+                <tr>
+                    <td><a class="btn primary" href="#">Edição</a></td>
+                    <td><code>btn primary</code></td>
+                    <td>Para ações com função de edição.</td>
+                </tr>
+                <tr>
+                    <td><a class="btn warning" href="#">Atenção</a></td>
+                    <td><code>btn warning</code></td>
+                    <td>Para ações que precisa ter cuidado ao realizá-las.</td>
+                </tr>
+                <tr>
+                    <td><a class="btn" href="#">Ações Adicionais</a></td>
+                    <td><code>btn</code></td>
+                    <td>Para qualquer outra ação que não seja de informação, edição, confirmação e exclusão.</td>
+                </tr>
+                <tr>
+                    <td><a class="btn default" href="#">Outras Informações</a></td>
+                    <td><code>btn default</code></td>
+                    <td>Para botões com função de visualizar informações.</td>
+                </tr>
+                <tr>
+                    <td><a class="btn danger" href="#">Exclusão</a></td>
+                    <td><code>btn danger</code></td>
+                    <td>Para ações com função de remoção. Uma janela de confirmação é acionada automaticamente no momento do clique.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Barra de Ações</h4>
+        <p>A barra de ações deve ser utilizada ao lado do título da página (<code>h2</code>), conforme o código mostrado ao lado:</p>
+        <ul class="action-bar guia-estilo">
+            <li class="has-child">
+                <a href="#" class="success"> Success <span></span></a>
+                <ul>
+                    <li><a href="#"> suboption 1 </a></li>
+                    <li><a href="#"> suboption 2 - suboption - suboption </a></li>
+                    <li><a href="#"> suboption 3 </a></li>
+                </ul>
+            </li>
+            <li><a class="primary" href="#"> Primary </a></li>
+            <li><a class="warning" href="#"> Warning </a></li>
+            <li><a href="#"> Action </a></li>
+            <li><a class="default" href="#"> Default </a></li>
+            <li class="has-child">
+                <a href="#" class="default"> Options <span></span></a>
+                <ul>
+                    <li><a href="#"> suboption 1 </a></li>
+                    <li><a href="#"> suboption 2 </a></li>
+                    <li><a href="#"> suboption 3 </a></li>
+                </ul>
+            </li>
+            <li><a class="danger" href="#"> Danger </a></li>
+        </ul>
+        
+        <h5>Regras</h5>
+        <ol>
+            <li>Para mostrar o conteúdo do link dentro de um popup, deve ser adicionada à tag <code>a</code> a classe <code>popup</code>.</li>
+            <li>Para botões que exigam uma confirmação (confirm javascript) antes de realizar a ação,
+            basta adicionar a classe <code>confirm</code> ao link. Caso queira padronizar a mensagem do confirm,
+            adicione como valor do atributo "data-confirm" na tag <code>a</code>.</li>
+            <li>Para lista de ações dentro de uma célula de uma tabela que já possui conteúdo, deve ser adicionada à tag <code>ul</code> a classe <code>float-right</code>.</li>
+            <li>Para marcar o botão como "checado", basta adicionar à tag <code>a</code> a classe <code>checked</code>.</li>
+        </ol>
+
+        <h5>Código HTML</h5>
+        
+<pre>
+&lt;ul class="action-bar"&gt;
+    &lt;li&gt;&lt;a class="primary" href="#"&gt; primary &lt;/a&gt;&lt;/li&gt;
+    &lt;li class="has-child"&gt;
+        &lt;a class="success" href="#"&gt; success &lt;span&gt;&lt;/span&gt;&lt;/a&gt;
+        &lt;ul&gt;
+            &lt;li&gt;&lt;a href="#"&gt; suboption 1 &lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt; suboption 2 &lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt; suboption 3 &lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt; default &lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a class="default" href="#"&gt; info &lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a class="danger" href="#"&gt; danger &lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</pre>
+
+        <h4>Links de Ações</h4>
+        <p>Devem ser utilizados preferencialmente dentro de tabelas.</p>
+        <ul class="list-display-icons">
+            <li><a title="Visualizar" href="#" class="icon-search">Visualizar</a></li>
+            <li><a title="Editar" href="#" class="icon-edit">Editar</a></li>
+            <li><a title="Remover" href="#" class="icon-trash">Remover</a></li>
+        </ul>
+
+        <h5>Regras</h5>
+        <p>Pode ser utilizado também de forma inline, quando existir somente um item, bastando adicionar a classe <code>.icon</code> ao elemento: <code>&lt;a title="Visualizar" href="#" class="icon icon-search"&gt;Visualizar&lt;/a&gt;</code>.</p>
+
+        <h5>Código HTML</h5>
+
+<pre>
+&lt;ul class="list-display-icons"&gt;
+    &lt;li&gt;&lt;a class="icon-search" href="#" title="Visualizar"&gt; Visualizar &lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a class="icon-edit" href="#" title="Editar"&gt; Editar &lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a class="icon-trash" href="#" title="Remover"&gt; Remover &lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</pre>
+
+    {% endbox %}
+</div>
+
+<div class="com_ancora" id="guia-3">
+    {% box "Tabelas" %}
+        <h4>Formatação Comum</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th><div class="text hint--top" data-hint="Lorem Ipsum dolor sit">Lorem ipsum</div></th>
+                    <th>Dolor sit</th>
+                    <th>Consectetur</th>
+                    <th>Adipiscing <span>Total: 400</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Adipiscing</td>
+                    <td>Elit</td>
+                    <td>Maecenas</td>
+                    <td class="align-right">250</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Est elit</td>
+                    <td>Convallis</td>
+                    <td>Nunc luctus</td>
+                    <td class="align-right">100</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>In bibendum</td>
+                    <td>Malesuada</td>
+                    <td>Integer mollis</td>
+                    <td class="align-right">50</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4">Total:</td>
+                    <td>400</td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <h4>Formatação Diferenciada</h4>
+        <table class="info">
+            <tbody>
+                <tr>
+                    <td>Mauris elementum:</td>
+                    <td colspan="3">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
+                </tr>
+                <tr>
+                    <td>Donec mollis:</td>
+                    <td>Nulla id lacus purus, iaculis blandit metus.</td>
+                    <td>Convallis:</td>
+                    <td>Fusce a nulla vel nisl ultricies placerat.</td>
+                </tr>
+                <tr>
+                    <td>Phasellus:</td>
+                    <td colspan="3">Vestibulum vel odio quis massa facilisis hendrerit.</td>
+                </tr>
+                <tr>
+                    <td>In ullamcorper:</td>
+                    <td>Cras ut neque id orci molestie porttitor.</td>
+                    <td>Malesuada:</td>
+                    <td>Mauris feugiat tortor ac massa sodales vulputate.</td>
+                </tr>
+                <tr>
+                    <td>Vivamus posuere:</td>
+                    <td>Curabitur ut mauris vel justo consectetur laoreet ac nec sem.</td>
+                    <td>Vestibulum:</td>
+                    <td>Nulla ultricies nulla in risus vestibulum sit amet tempus nunc vehicula.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="obs">
+            É necessário acrescentar a classe <code>info</code> à tabela para aderir à formatação acima, sem utilizar as tags <code>tbody</code>, <code>thead</code> ou <code>tfoot</code>.
+            Automaticamente, todos os <code>td</code> de números ímpares receberão estilização em negrito e alinhamento à direita.
+        </p>
+        
+        <h4>Regras</h4>
+        <ol>
+            <li>A tag <code>tfoot</code> automaticamente estiliza o conteúdo de suas células com fonte negrito e alinhamento à direita.</li>
+            <li>Para inserir um comentário a respeito de uma célula de cabeçalho de tabela (<code>th</code>), basta adicionar as classes <code>text hint--top</code> à tag e o atributo <code>data-hint</code> contendo o comentário.</li>
+            <li>É possível inserir a classe <code>disabled</code> em uma tag <code>tr</code> caso deseja que toda a linha da tabela seja desabilitada visualmente.</li>
+        </ol>
+        
+        <h4>Código HTML</h4>
+
+<pre>
+&lt;table&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+         &lt;th&gt;#&lt;/th&gt;
+         &lt;th&gt;
+            &lt;div class="text hint--top" data-hint="Lorem Ipsum dolor sit"&gt;Lorem ipsum&lt;/div&gt;
+         &lt;/th&gt;
+         &lt;th&gt;Dolor sit&lt;/th&gt;
+         &lt;th&gt;Consectetur&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+         &lt;td&gt;1&lt;/td&gt;
+         &lt;td&gt;Adipiscing&lt;/td&gt;
+         &lt;td&gt;Elit&lt;/td&gt;
+         &lt;td&gt;Maecenas&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+         &lt;td&gt;2&lt;/td&gt;
+         &lt;td&gt;Est elit&lt;/td&gt;
+         &lt;td&gt;Convallis&lt;/td&gt;
+         &lt;td&gt;Nunc luctus&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;
+</pre>
+
+    {% endbox %}
+</div>
+
+<div class="com_ancora" id="guia-4">
+    {% box "Formulários" %}
+        <form action="">
+            <fieldset>
+                <div class="form-row">
+                    <div class="field-box-first">
+                        <label for="inputText">Texto:</label>
+                        <input type="text" id="inputText" name="input" placeholder="Digite o texto" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field-box-first">
+                        <label for="inputEmail">E-mail:</label>
+                        <input type="email" id="inputEmail" name="inputemail" placeholder="Digite o e-mail" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field-box-first">
+                        <label for="fileInput">Arquivo:</label>
+                        <input type="file" id="fileInput" name="fileInput" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field-box field-box-first">
+                        <label for="normalSelect">Select:</label>
+                        <select name="normalSelect" id="normalSelect">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="field-box field-box-later">
+                        <label for="multiSelect">Multiple select:</label>
+                        <select multiple="multiple" name="multiSelect" id="multiSelect">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field-box-first">
+                        <p class="labelForm">Checkboxes:</p>
+                        <ul class="form-options">
+                            <li>
+                                <label>
+                                    <input type="checkbox" name="optionsCheckboxes" value="option1" />
+                                    <span>Opção 1</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="checkbox" name="optionsCheckboxes" value="option2" />
+                                    <span>Opção 2</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="checkbox" name="optionsCheckboxes" value="option3" />
+                                    <span>Opção 3</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="checkbox" name="optionsCheckboxes" value="option4" />
+                                    <span>Option 4</span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field-box-first">
+                        <label for="textarea">Textarea:</label>
+                        <textarea name="textarea" id="textarea" placeholder="Digite o texto"></textarea>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field-box-first">
+                        <p class="labelForm">Radiobuttons:</p>
+                        <ul class="form-options">
+                            <li>
+                                <label>
+                                    <input type="radio" name="optionsRadios" value="option1" />
+                                    <span>Opção 1</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="radio" name="optionsRadios" value="option2" />
+                                    <span>Opção 2</span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </fieldset>
+            <div class="submit-row">
+                <input type="submit" value="Salvar" class="default" />
+                <input name="_addanother" type="submit" value="Salvar e adicionar outro" />
+            </div>
+        </form>
+
+        <h4>Código HTML</h4>
+
+<pre>
+&lt;form action=""&gt;
+    &lt;div class="form-row"&gt;
+        &lt;label for="inputText"&gt;Text:&lt;/label&gt;
+        &lt;input type="text" id="inputText" name="input" /&gt;
+    &lt;/div&gt;
+    &lt;div class="form-row"&gt;
+        &lt;label for="normalSelect"&gt;Select:&lt;/label&gt;
+        &lt;select name="normalSelect" id="normalSelect"&gt;
+            &lt;option&gt;1&lt;/option&gt;
+            &lt;option&gt;2&lt;/option&gt;
+        &lt;/select&gt;
+    &lt;/div&gt;
+    &lt;div class="form-row"&gt;
+        &lt;label for="multiSelect"&gt;Multiple select:&lt;/label&gt;
+        &lt;select multiple="multiple" name="multiSelect" id="multiSelect"&gt;
+            &lt;option&gt;1&lt;/option&gt;
+            &lt;option&gt;2&lt;/option&gt;
+        &lt;/select&gt;
+    &lt;/div&gt;
+    &lt;div class="form-row"&gt;
+        &lt;p class="labelForm"&gt;Checkboxes:&lt;/p&gt;
+        &lt;ul class="form-options"&gt;
+            &lt;li&gt;
+                &lt;label&gt;
+                    &lt;input type="checkbox" name="optionsCheckboxes" value="option1" /&gt;
+                    &lt;span&gt;Opção 1&lt;/span&gt;
+                &lt;/label&gt;
+            &lt;/li&gt;
+            &lt;li&gt;
+                &lt;label&gt;
+                    &lt;input type="checkbox" name="optionsCheckboxes" value="option2" /&gt;
+                    &lt;span&gt;Opção 2&lt;/span&gt;
+                &lt;/label&gt;
+            &lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;div class="form-row"&gt;
+        &lt;label for="textarea"&gt;Textarea:&lt;/label&gt;
+        &lt;textarea name="textarea" id="textarea"&gt;&lt;/textarea&gt;
+    &lt;/div&gt;
+    &lt;div class="form-row"&gt;
+        &lt;label for="fileInput"&gt;File:&lt;/label&gt;
+        &lt;input type="file" id="fileInput" name="fileInput" /&gt;
+    &lt;/div&gt;
+    &lt;div class="form-row"&gt;
+        &lt;p class="labelForm"&gt;Radiobuttons:&lt;/p&gt;
+        &lt;ul class="form-options"&gt;
+            &lt;li&gt;
+                &lt;label&gt;
+                    &lt;input type="radio" name="optionsRadios" value="option1" /&gt;
+                    &lt;span&gt;Opção 1&lt;/span&gt;
+                &lt;/label&gt;
+            &lt;/li&gt;
+            &lt;li&gt;
+                &lt;label&gt;
+                    &lt;input type="radio" name="optionsRadios" value="option2" /&gt;
+                    &lt;span&gt;Opção 2&lt;/span&gt;
+                &lt;/label&gt;
+            &lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;div class="submit-row"&gt;
+        &lt;input type="submit" value="Salvar" class="btn large" /&gt;
+        &lt;input name="_addanother" type="submit" value="Salvar e adicionar outro" class="btn small" /&gt;
+    &lt;/div&gt;
+&lt;/form&gt;
+</pre>
+        
+    {% endbox %}
+</div>
+
+<div class="com_ancora" id="guia-5">
+    {% box "Navegação" %}
+        <h4>Abas</h4>
+        <p>É possível gerar uma listagem por abas conforme visualizado abaixo, para isso, basta adicionar a classe <code>tabs</code> ao <code>ul</code>:</p>
+
+        <ul class="tabs">
+            <li><a href="#">Janeiro</a></li>
+            <li><a href="#">Fevereiro</a></li>
+            <li>
+                <a href="#">Março</a>
+                <span>99</span>
+            </li>
+            <li><a href="#">Abril</a></li>
+            <li><a href="#">Maio</a></li>
+            <li class="active"><a href="#">Junho</a></li>
+            <li class="disabled"><a href="#">Julho</a></li>
+            <li><a href="#">Agosto</a></li>
+            <li>
+                <a href="#">Setembro</a>
+                <span>32</span>
+            </li>
+            <li><a href="#">Outubro</a></li>
+            <li>
+                <a href="#">Novembro</a>
+                <span>171</span>
+            </li>
+            <li><a href="#">Dezembro</a></li>
+        </ul>
+        <p class="obs">É possível adicionar uma <code>span</code> dentro do <code>li</code> com texto a ser exibido de forma sobrescrita na aba, conforme os meses Março, Setembro e Novembro acima.</p>
+
+        <h5>Pills</h5>
+        <p class="marginTop20">Para gerar uma listagem por pílulas, basta adicionar a classe <code>pills</code> ao <code>ul</code>:</p>
+
+        <ul class="pills">
+            <li><a href="#">Janeiro</a></li>
+            <li><a href="#">Fevereiro</a></li>
+            <li><a href="#">Março</a></li>
+            <li><a href="#">Abril</a></li>
+            <li><a href="#">Maio</a></li>
+            <li class="active"><a href="#">Junho</a></li>
+            <li><a href="#">Julho</a></li>
+            <li><a href="#">Agosto</a></li>
+            <li><a href="#">Setembro</a></li>
+            <li><a href="#">Outubro</a></li>
+            <li><a href="#">Novembro</a></li>
+            <li><a href="#">Dezembro</a></li>
+        </ul>
+
+        <h5>Abas Dinâmicas</h5>
+        <p>Para gerar dinamicamente as abas para os conteúdos de uma página, basta englobar cada pedaço de código com <code>&lt;div class="tab" data-title="Título"&gt;</code>, além de adicionar o código abaixo ao template:</p>
+        
+<pre>
+&#123;% block extrahead %&#125;
+&lt;script&gt;jQuery.getScript('/static/edu/js/tabs.js');&lt;/script&gt;
+&#123;% endblock %&#125;
+</pre>
+
+        <h5>Regras</h5>
+        <p>Para deixar todos os itens da lista como se fossem desabilitados, basta adicionar a classe <code>disabled</code> à tag <code>ul</code>. Nesse caso, o <code>li</code> que possuir a classe <code>active</code> vai ser visualizado normalmente.</p>
+
+        <h4>Código HTML</h4>
+
+<pre>
+&lt;ul class="pills"&gt;    
+    &lt;li&gt;&lt;a href="#"&gt;Janeiro&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Fevereiro&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Março&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Outubro&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Novembro&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Dezembro&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</pre>
+        
+    {% endbox %}
+</div>
+
+<div class="com_ancora" id="guia-7">
+    {% box "Mensagens" %}
+        
+        <p>Seguem exemplos de todos os tipos de mensagens e avisos aplicados ao sistema e seus respectivos códigos:</p>
+      
+        <h4>Alertas</h4>
+        <p class="msg alert">
+            <strong>Atenção:</strong> Inscrições para fiscais do concurso abertas.
+        </p>
+        
+        <h5>Código HTML</h5>
+        
+<pre>
+&lt;p class="msg alert"&gt;
+    &lt;strong&gt;Atenção:&lt;/strong&gt; Inscrições para fiscais do concurso abertas.
+&lt;/p&gt;
+</pre>
+        
+        <h4>Informativos</h4>
+        <div class="msg info">
+            <strong>Informação:</strong> Inscrições para fiscais do concurso abertas.
+            <ul>
+                <li>Poderão se inscrever servidores e alunos.</li>
+                <li>As inscrições são até 23/06/2012.</li>
+            </ul>
+        </div>
+        
+        <h5>Código HTML</h5>
+        
+<pre>
+&lt;div class="msg info"&gt;
+    &lt;strong&gt;Atenção:&lt;/strong&gt; Inscrições para fiscais do concurso abertas.
+&lt;/div&gt;
+</pre>  
+        
+        <h4>Mensagens de Sucesso</h4>
+        <p class="msg success">A ação foi efetuada com <strong>sucesso</strong>. <a href="#">Acesse seu comprovante.</a></p>
+        
+        <h5>Código HTML</h5>
+        
+<pre>
+&lt;p class="msg success"&gt;
+    A ação foi efetuada com &lt;strong&gt;sucesso&lt;/strong&gt;.
+&lt;/p&gt;
+</pre>  
+
+        <h4>Mensagens de Erro</h4>
+        <p class="msg error"><strong>Atenção:</strong> Há um erro nessa página.</p>
+        <p class="obs">Para mensagens de erro é possível utilizar as seguintes classes CSS: <code>msg error</code> e <code>errornote</code>.</p>
+        
+        <h5>Código HTML</h5>
+        
+<pre>
+&lt;p class="msg error"&gt;
+    &lt;strong&gt;Atenção:&lt;/strong&gt; Há um erro nessa página.
+&lt;/p&gt;
+</pre>  
+
+        <h5>Erros em Formulários</h5>
+        <form action="">
+            <fieldset>
+                <div class="form-row errors">
+                    <ul class="errorlist">
+                        <li>Este campo foi preenchido de forma errada.</li>
+                        <li><a href="#">Veja opções de preenchimento</a>.</li>
+                        <li>Não é permitido números neste campo.</li>
+                    </ul>
+                    <label for="id_nome">Nome:</label>
+                    <input type="text" name="nome" id="id_nome" />
+                </div>
+            </fieldset>
+        </form>   
+        
+        <h5>Código HTML</h5>
+        
+<pre>
+&lt;div class="form-row errors"&gt;
+    &lt;ul class="errorlist"&gt;
+        &lt;li&gt;Este campo foi preenchido de forma errada.&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#"&gt;Veja opções de preenchimento&lt;/a&gt;.&lt;/li&gt;
+        &lt;li&gt;Não é permitido números neste campo.&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;label for="id_nome"&gt;Nome:&lt;/label&gt;
+    &lt;input type="text" name="nome" id="id_nome" /&gt;
+&lt;/div&gt; 
+</pre>
+
+        <h4>Situações/Status</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Descrição</th>
+                    <th>Situações</th>
+                    <th>Classes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Indica situação inicial ou comum.</td>
+                    <td><span class="status status-info">Informação</span></td>
+                    <td><code>info</code>, <code>novo</code></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Indica situação temporária.</td>
+                    <td><span class="status status-alert">Alerta</span></td>
+                    <td><code>aguardando-validacao</code>, <code>aguardando-validacao-da-chefia</code>, <code>alert</code>, <code>em-progresso</code>, <code>em-tramite</code>, <code>pendente</code></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Indica situação final de sucesso.</td>
+                    <td><span class="status status-success">Sucesso</span></td>
+                    <td><code>aberta</code>, <code>aceito</code>, <code>ativa</code>, <code>ativo</code>, <code>cadastrado</code>, <code>cadastrado-no-siape</code>, <code>deferida</code>, <code>entregue</code>, <code>finalizado</code>, <code>participante</code>, <code>recebido</code>, <code>resolvido</code>, <code>success</code>, <code>validado</code>, <code>validado-pela-chefia</code></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Indica situação final de insucesso, podendo ser revertido para situação de sucesso.</td>
+                    <td><span class="status status-error">Erro</span></td>
+                    <td><code>baixado</code>, <code>error</code>, <code>expirada</code>, <code>impedido</code>, <code>inativa</code>, <code>indeferida</code>, <code>invalidado</code>, <code>invalidado-pela-chefia</code>, <code>rejeitado</code></td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="obs">Para utilizar esse formato de situações/status, basta adicionar o prefixo <code>status status-</code> preferencialmente à tag <code>span</code>.</p>
+        
+    {% endbox %}
+</div>
+
+<div class="com_ancora" id="guia-9-1">
+    {% box "Caixa de Informações" %}
+        
+        <p>É possível gerar caixas de informações retráteis com o código abaixo, através das templatetags do Django:</p>
+
+<pre>
+&lcub;% box 'Título da caixa' 'Classe CSS, se necessária' %&rcub;
+    Conteúdo da caixa
+&lcub;% endbox %&rcub;
+</pre>
+
+        <p class="obs">É possível escrever variáveis em Python dentro do título da caixa, porém, deve-se, obrigatoriamente, manter as aspas.</p>
+
+        <h4>Classes CSS Disponíveis</h4>
+        <dl>
+            <dt>filters:</dt>
+            <dd>Usado para caixas que possuam apenas filtros.</dd>
+            <dt>help:</dt>
+            <dd>Usado para mostrar mensagens de ajuda.</dd>
+            <dt>hideInfo:</dt>
+            <dd>Usado para que a caixa inicie fechada.</dd>
+            <dt>text:</dt>
+            <dd>Usado quando o conteúdo for somente texto em parágrafos.</dd>
+        </dl>
+    
+        <h4>Exemplos</h4>
+
+        {% box 'Exemplo de parágrafo' %}
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sapien diam, mollis eget pulvinar non, hendrerit at arcu. Praesent sodales luctus tempus. Phasellus pulvinar ornare dui, ac consectetur odio ullamcorper non. Cras felis sem, suscipit sed dignissim ut, lobortis sit amet velit. Aliquam eu enim libero. Nam ultrices blandit dapibus. Vivamus tellus mauris, egestas in mattis vel, dignissim at ipsum. Nullam a tincidunt nunc. Pellentesque tristique leo ac est elementum tincidunt. Nunc accumsan leo vel nulla suscipit id mollis lectus scelerisque. Integer blandit neque ligula.</p>
+        {% endbox %}
+
+        {% box 'Exemplo de formulário' %}
+            <form action="">
+                <fieldset>
+                    <div class="form-row">
+                        <div class="field-box-first">
+                         <label for="inputText">Text:</label>
+                         <input type="text" id="inputText" name="input" />
+                     </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="field-box field-box-first">
+                         <label for="normalSelect">Select:</label>
+                         <select name="normalSelect" id="normalSelect">
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option>5</option>
+                         </select>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="submit-row">
+                    <input name="_save" type="submit" value="Salvar" />
+                    <input name="_addanother" type="submit" value="Salvar e adicionar outro" />
+                </div>
+            </form>
+        {% endbox %}
+        
+        {% box 'Exemplo de tabela sem cabeçalho' %}
+            <table class="info">
+                <tbody>
+                    <tr>
+                        <td>Mauris elementum:</td>
+                        <td colspan="3">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
+                    </tr>
+                    <tr>
+                        <td>Donec mollis:</td>
+                        <td>Nulla id lacus purus, iaculis blandit metus.</td>
+                        <td>Convallis:</td>
+                        <td>Fusce a nulla vel nisl ultricies placerat.</td>
+                    </tr>
+                    <tr>
+                        <td>Phasellus:</td>
+                        <td colspan="3">Vestibulum vel odio quis massa facilisis hendrerit.</td>
+                    </tr>
+                </tbody>
+            </table>
+        {% endbox %}
+        
+        {% box 'Exemplo de tabela com cabeçalho' %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Lorem ipsum</th>
+                        <th>Lorem ipsum</th>
+                        <th>Lorem ipsum</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Mauris elementum</td>
+                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
+                        <td>Convallis</td>
+                        <td>Fusce a nulla vel nisl ultricies placerat.</td>
+                    </tr>
+                    <tr>
+                        <td>Donec mollis</td>
+                        <td>Nulla id lacus purus, iaculis blandit metus.</td>
+                        <td>Convallis</td>
+                        <td>Fusce a nulla vel nisl ultricies placerat.</td>
+                    </tr>
+                    <tr>
+                        <td>Phasellus</td>
+                        <td>Vestibulum vel odio quis massa facilisis hendrerit.</td>
+                        <td>Convallis</td>
+                        <td>Fusce a nulla vel nisl ultricies placerat.</td>
+                    </tr>
+                </tbody>
+            </table>
+        {% endbox %}
+    {% endbox %}
+</div>
+
+<div class="com_ancora" id="guia-9-2">
+    {% box "Popup com Dados do Usuário" %}
+        <dl>
+            <dt>Usuário:</dt>
+            <dd>{{ user|format }}</dd>
+        </dl>
+        
+        <h5>Código HTML</h5>
+
+<pre>
+&lcub;&lcub; user|usuario &rcub;&rcub;
+</pre>
+
+    {% endbox %}
+</div>
+
+<div class="com_ancora" id="guia-11-3">
+    {% box "Caixa com Informações de Pessoa" %}
+        <div class="container">
+            <div class="box-pessoa">
+                <h5>Nome da Pessoa</h5>
+                <div>
+                    <img alt="Nome da Pessoa" src="/static/comum/img/default.jpg" />
+                </div>
+                <dl>
+                    <dt>Matrícula:</dt>
+                    <dd><a href="#">00000000000</a></dd>
+                    <dt>Informação 1:</dt>
+                    <dd>Lorem ipsum</dd>
+                    <dt>Informação 2:</dt>
+                    <dd>Lorem ipsum</dd>
+                    <dt>Informação 3:</dt>
+                    <dd>Lorem ipsum</dd>
+                </dl>
+                <ul class="action-bar">
+                    <li><a href="#" class="success">Adicionar</a></li>
+                    <li><a href="#" class="primary">Editar</a></li>
+                    <li><a href="#" class="danger">Excluir</a></li>
+                </ul>
+            </div>
+            <div class="box-pessoa">
+                <h5>Nome da Pessoa</h5>
+                <div>
+                    <img alt="Nome da Pessoa" src="/static/comum/img/default.jpg" />
+                </div>
+                <dl>
+                    <dt>Matrícula:</dt>
+                    <dd><a href="#">00000000000</a></dd>
+                    <dt>Informação 1:</dt>
+                    <dd>Lorem ipsum</dd>
+                    <dt>Informação 2:</dt>
+                    <dd>Lorem ipsum</dd>
+                    <dt>Informação 3:</dt>
+                    <dd>Lorem ipsum</dd>
+                </dl>
+                <div class="status status-default">
+                    <h6>Formulário</h6>
+                    <p>Lorem ipsum dolor sit amet</p>
+                </div>
+                <div class="status status-error">
+                    <h6>Erro</h6>
+                    <p>Lorem ipsum dolor sit amet</p>
+                </div>
+                <div class="status status-alert">
+                    <h6>Alerta</h6>
+                    <p>Lorem ipsum dolor sit amet</p>
+                </div>
+                <div class="status status-success">
+                    <h6>Sucesso</h6>
+                    <p>Lorem ipsum dolor sit amet</p>
+                </div>
+            </div>
+            <div class="box-pessoa error">
+                <h5>Nome da Pessoa</h5>
+                <div>
+                    <img alt="Nome da Pessoa" src="/static/comum/img/default.jpg" />
+                </div>
+                <dl>
+                    <dt>Matrícula:</dt>
+                    <dd><a href="#">00000000000</a></dd>
+                    <dt>Informação:</dt>
+                    <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse euismod turpis ut tellus.</dd>
+                </dl>
+            </div>
+        </div>
+        
+        <h5>Código HTML</h5>
+
+<pre>
+&lt;div class="box-pessoa"&gt;
+    &lt;h5&gt;Nome da Pessoa&lt;/h5&gt;
+    &lt;div&gt;
+        &lt;img title="Nome da Pessoa" src="/static/comum/img/default.jpg" /&gt;
+    &lt;/div&gt;
+    &lt;dl&gt;
+        &lt;dt&gt;Matrícula:&lt;/dt&gt;
+        &lt;dd&gt;&lt;a href="#"&gt;00000000000&lt;/a&gt;&lt;/dd&gt;
+        &lt;dt&gt;Informação:&lt;/dt&gt;
+        &lt;dd&gt;Lorem ipsum dolor sit amet.&lt;/dd&gt;
+    &lt;/dl&gt;
+    &lt;ul class="action-bar"&gt;
+        &lt;li&gt;&lt;a href="#" class="success"&gt;Adicionar&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#" class="danger"&gt;Excluir&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;div class="status status-error"&gt;
+            &lt;h6&gt;Erro&lt;/h6&gt;
+            &lt;p&gt;Lorem ipsum dolor sit amet&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+        <p class="obs">Para deixar a caixa em vermelho, indicando algum erro ou problema, basta adicionar a classe <code>error</code> à tag <code>div.box-pessoa</code>.</p>
+    {% endbox %}
+</div>
+
+<div class="com_ancora" id="guia-11-1">
+    {% box "Barra de Busca e Filtros" %}
+        <div class="action-bar search-and-filters">
+            <div class="filter"> 
+                <label>Buscar:</label>
+                <form method="get" action="" id="changelist-search">
+                    <input type="text" class="search-query" id="searchbar" value="" name="q" size="40">
+                    <input type="submit" value="Ir">
+                </form>
+            </div>
+            <div class="filter">
+                <label>Filtrar por campus:</label>
+                <select>
+                    <option>Todos os campi</option>
+                    <option>DG/AP</option>
+                    <option>DG/SGA</option>
+                    <option>DG/ZN</option>
+                </select>
+            </div>
+            <div class="filter">
+                <label>Filtrar por tipo:</label>
+                <select>
+                    <option>Todos os tipos</option>
+                    <option>Alimentação Escolar</option>
+                    <option>Auxílio Transporte</option>
+                    <option>Iniciação ao Trabalho</option>
+                    <option>Cursos de Idiomas</option>
+                </select>
+            </div>
+        </div>
+    
+        <h5>Código HTML</h5>
+
+<pre>
+&lt;div class="action-bar search-and-filters"&gt;
+    &lt;div class="filter"&gt;
+        &lt;label&gt;Filtrar por campus:&lt;/label&gt;
+        &lt;select&gt;
+            &lt;option&gt;Todos os campi&lt;/option&gt;
+            &lt;option&gt;DG/AP&lt;/option&gt;
+            &lt;option&gt;DG/ZN&lt;/option&gt;
+        &lt;/select&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+        <p class="obs">É possível adicionar a classe <code>.filter-select-big</code> à tag <code>div.filter</code> para fazer com que o <code>select</code> fique com uma largura maior que a padrão.</p>
+    {% endbox %}
+</div>
+
+<div class="com_ancora" id="guia-11-5">
+    {% box "Gráficos" %}
+        <p>Para utilizar gráficos nas páginas, basta incluir o código abaixo no template:</p>
+
+<pre>
+&#123;% block extrahead %&#125;
+&lt;script src="/static/djtools/highcharts/highcharts.js"&gt;&lt;/script&gt;
+&lt;script src="/static/djtools/highcharts/exporting.js"&gt;&lt;/script&gt;
+&#123;% endblock %&#125;
+</pre>
+
+        <p>O código seguinte também é necessário para renderização do gráfico dentro do <code>&#123;% block content %&#125;</code>:</p>
+        
+<pre>
+&lt;script&gt;
+&#123;% grafico|safe %&#125;
+&lt;/script&gt;
+&lt;div class="div-grafico"&gt;&lt;/div&gt;
+</pre>
+
+        <p class="obs">É possível substituir a classe <code>div-grafico</code> por <code>grafico50</code> caso queira que o gráfico ocupe 50% da tela.</p>
+    {% endbox %}
+</div>
+
+<div class="com_ancora" id="guia-11-6">
+    {% box "Âncoras" %}
+        
+        <p>As âncoras são links relativos à áreas dentro da página atual. Quando clicadas, a página deve se mover e mostrar o tópico definido.</p>
+        <p>Na lateral direita desta página, é possível visualizar um exemplo de âncora fixa.</p>
+        
+        <h4>Código HTML</h4>
+
+<pre>
+&lt;ul class="ancoras"&gt;
+    &lt;li&gt;&lt;a href="#id_1"&gt;Caixa de Entrada&lt;/a&gt;
+        &lt;ul&gt;
+            &lt;li&gt;&lt;a href="#id_2"&gt;Aguardando recebimento&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#id_3"&gt;Aguardando encaminhamento&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;&lt;a href="#id_4"&gt;Caixa de Saída&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</pre>
+        
+        <p class="obs">
+            É necessário adicionar aos conteúdos da página a classe <code>com_ancora</code> para que eles se adaptem às âncoras.
+        </p>
+        
+    {% endbox %}
+</div>
+
+<div class="com_ancora" id="guia-11-7">
+    {% box "Barra de Progresso" %}
+        
+        <p>Devem ser utilizadas para demonstrar visualmente o progresso de alguma ação dentro do sistema.</p>
+        
+        <div class="progress success">
+            <p>100%</p>
+        </div>
+
+        <div class="progress primary">
+            <p>25%</p>
+        </div>
+        
+        <div class="progress alert">
+            <p>43.5%</p>
+        </div>
+        
+        <div class="progress error">
+            <p>3/6</p>
+        </div>
+
+        <h4>Código HTML</h4>
+
+<pre>
+&lt;div class="progress"&gt;
+    &lt;p&gt;25%&lt;/p&gt;
+&lt;/div&gt;
+</pre>
+        
+        <p class="obs">Colocando o valor em porcentagem dentro do <code>p</code>, automaticamente a barra de progresso se expandirá para a largura determinada e receberá o <code>title</code> indicando o valor concluído.</p>
+        <p class="obs">É possível adicionar as classes <code>alert</code>, <code>error</code>, <code>primary</code> e <code>success</code> no <code>div.progress</code> para customizar as cores da barra de acordo com a situação do objeto referenciado.</p>
+        
+    {% endbox %}
+    
+</div>
+
+<div class="com_ancora" id="guia-11-4">
+    {% box "Calendário" %}
+        <div class="container">
+            <div class="legenda">
+                <p>Legenda:</p>
+                <ul>
+                    <li class="hoje">Hoje</li>
+                    <li class="error">Feriado</li>
+                    <li class="ferias">Férias</li>
+                    <li class="alert">Recesso</li>
+                    <li class="info">Evento/Data Comemorativa</li>
+                </ul>
+            </div>
+            <div class="calendario">
+                <table class="calendario-dias">
+                    <caption>Julho</caption>
+                    <thead>
+                        <tr>
+                            <th id="domingo" class="semana">Dom</th>
+                            <th id="segunda" class="semana">Seg</th>
+                            <th id="terca" class="semana">Ter</th>
+                            <th id="quarta" class="semana">Qua</th>
+                            <th id="quinta" class="semana">Qui</th>
+                            <th id="sexta" class="semana">Sex</th>
+                            <th id="sabado" class="semana">Sáb</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td headers="domingo">&nbsp;</td>
+                            <td headers="segunda">&nbsp;</td>
+                            <td headers="terca">&nbsp;</td>
+                            <td headers="quarta">&nbsp;</td>
+                            <td headers="quinta">&nbsp;</td>
+                            <td headers="sexta">&nbsp;</td>
+                            <td headers="sabado" class="fds">1</td>
+                        </tr>
+                        <tr>
+                            <td headers="domingo" class="fds">2</td>
+                            <td headers="segunda" class="evento">3</td>
+                            <td headers="terca" class="evento">4</td>
+                            <td headers="quarta" class="evento">5</td>
+                            <td headers="quinta" class="recesso">6</td>
+                            <td headers="sexta" class="feriado">7</td>
+                            <td headers="sabado" class="fds">8</td>
+                        </tr>
+                        <tr>
+                            <td headers="domingo" class="fds">9</td>
+                            <td headers="segunda">10</td>
+                            <td headers="terca">11</td>
+                            <td>12</td>
+                            <td class="hoje">13</td>
+                            <td>14</td>
+                            <td class="fds">15</td>
+                        </tr>
+                        <tr>
+                            <td headers="domingo" class="fds">16</td>
+                            <td headers="segunda" class="evento">17</td>
+                            <td headers="terca">18</td>
+                            <td>19</td>
+                            <td>20</td>
+                            <td>21</td>
+                            <td class="fds">22</td>
+                        </tr>
+                        <tr>
+                            <td headers="domingo" class="fds">23</td>
+                            <td headers="segunda">24</td>
+                            <td class="feriado">25</td>
+                            <td>26</td>
+                            <td>27</td>
+                            <td class="ferias">28</td>
+                            <td class="fds ferias">29</td>
+                        </tr>
+                        <tr>
+                            <td headers="domingo" class="fds ferias">30</td>
+                            <td headers="segunda" class="ferias">31</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ul class="calendario-referencia">
+                    <li class="evento">03 a 05/07: Evento</li>
+                    <li class="recesso">06: Recesso</li>
+                    <li class="feriado">07: Feriado</li>
+                    <li class="evento">17: Evento</li>
+                    <li class="feriado">25: Feriado</li>
+                    <li class="ferias">28 a 31/07: Férias</li>
+                </ul>
+            </div>
+        </div>
+    
+        <h5>Tabela de Referência</h5>
+        <table>
+            <thead>
+                <tr>
+                    <th>Classe</th>
+                    <th>Descrição</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>.semana</code></td>
+                    <td>Usada para identificar o cabeçalho da tabela.</td>
+                </tr>
+                <tr>
+                    <td><code>.fds</code></td>
+                    <td>Usada para identificar um sábado ou domingo.</td>
+                </tr>
+                <tr>
+                    <td><code>.feriado</code></td>
+                    <td>Usada para identificar um feriado.</td>
+                </tr>
+                <tr>
+                    <td><code>.ferias</code></td>
+                    <td>Usada para identificar período de férias.</td>
+                </tr>
+                <tr>
+                    <td><code>.recesso</code></td>
+                    <td>Usada para identificar um recesso.</td>
+                </tr>
+                <tr>
+                    <td><code>.hoje</code></td>
+                    <td>Usada para identificar o dia atual.</td>
+                </tr>
+                <tr>
+                    <td><code>.evento</code></td>
+                    <td>Usada para identificar um evento.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h5>Código HTML</h5>
+
+<pre>
+&lt;div class="legenda"&gt;
+    &lt;p&gt;Legenda:&lt;/p&gt;
+    &lt;ul&gt;
+        &lt;li class="error"&gt;Feriado&lt;/li&gt;
+        &lt;li class="alert"&gt;Recesso&lt;/li&gt;
+        &lt;li class="info"&gt;Evento&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="calendario"&gt;
+    &lt;table class="calendario-dias"&gt;
+    &lt;caption&gt;Janeiro&lt;/caption&gt;
+        &lt;thead&gt;
+            &lt;tr&gt;
+                &lt;th class="semana"&gt;S&lt;/th&gt;
+                &lt;th class="semana"&gt;T&lt;/th&gt;
+                &lt;th class="semana"&gt;Q&lt;/th&gt;
+                &lt;th class="semana"&gt;Q&lt;/th&gt;
+                &lt;th class="semana"&gt;S&lt;/th&gt;
+                &lt;th class="semana"&gt;S&lt;/th&gt;
+                &lt;th class="semana"&gt;D&lt;/th&gt;
+            &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+            &lt;tr&gt;
+                &lt;td&gt;&amp;nbsp;&lt;/td&gt;
+                &lt;td&gt;1&lt;/td&gt;
+                &lt;td&gt;2&lt;/td&gt;
+                &lt;td&gt;3&lt;/td&gt;
+                &lt;td class="feriado"&gt;4&lt;/td&gt;
+                &lt;td class="recesso evento"&gt;5&lt;/td&gt;
+                &lt;td class="evento"&gt;6&lt;/td&gt;
+                &lt;td&gt;(...)&lt;/td&gt;
+                &lt;td class="fds"&gt;28&lt;/td&gt;
+                &lt;td class="fds"&gt;29&lt;/td&gt;
+                &lt;td&gt;30&lt;/td&gt;
+                &lt;td&gt;31&lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+    &lt;ul class="calendario-referencia"&gt;
+        &lt;li class="feriado"&gt;4&lt;/li&gt;
+        &lt;li class="recesso"&gt;5&lt;/li&gt;
+        &lt;li class="evento"&gt;5&lt;/li&gt;
+        &lt;li class="evento"&gt;6&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+</pre>
+    
+        <h4>Calendário Mensal</h4>
+        <div class="container">
+            <div class="calendario calendario-mensal">
+                <table>
+                    <caption>Julho</caption>
+                    <thead>
+                        <tr>
+                            <th id="domingo" class="semana">Dom</th>
+                            <th id="segunda" class="semana">Seg</th>
+                            <th id="terca" class="semana">Ter</th>
+                            <th id="quarta" class="semana">Qua</th>
+                            <th id="quinta" class="semana">Qui</th>
+                            <th id="sexta" class="semana">Sex</th>
+                            <th id="sabado" class="semana">Sáb</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td headers="domingo" class="vazio">&nbsp;</td>
+                            <td headers="segunda" class="vazio">&nbsp;</td>
+                            <td headers="terca" class="vazio">&nbsp;</td>
+                            <td headers="quarta" class="vazio">&nbsp;</td>
+                            <td headers="quinta" class="vazio">&nbsp;</td>
+                            <td headers="sexta" class="vazio">&nbsp;</td>
+                            <td headers="sabado" class="fds">
+                                <span>1</span>
+                             </td>
+                        </tr>
+                        <tr>
+                            <td headers="domingo" class="fds">
+                                <span>2</span>
+                             </td>
+                            <td headers="segunda">
+                                <span>3</span>
+                                <ul>
+                                    <li class="success"><strong>08:00</strong> Eu sou um evento deferido</li>
+                                    <li class="error"><strong>10:00</strong> Eu sou um evento cancelado</li>
+                                    <li class="info"><strong>19:00</strong> Eu sou um evento normal</li>
+                                </ul>
+                             </td>
+                            <td headers="terca">
+                                <span>4</span>
+                                <ul>
+                                    <li class="success"><strong>08:00</strong> Eu sou um evento deferido</li>
+                                    <li class="alert"><strong>18:00</strong> Eu sou um evento pendente</li>
+                                    <li class="info"><strong>19:00</strong> Eu sou um evento normal</li>
+                                </ul>
+                              </td>
+                            <td headers="quarta">
+                                <span>5</span>
+                                <ul>
+                                    <li class="alert"><strong>18:00</strong> Eu sou um evento pendente</li>
+                                </ul>
+                             </td>
+                            <td headers="quinta">
+                                <span>3</span>
+                            </td>
+                            <td headers="sexta">
+                                <span>7</span>
+                                <ul>
+                                    <li class="success"><strong>08:00</strong> Eu sou um evento deferido</li>
+                                    <li class="error"><strong>10:00</strong> Eu sou um evento cancelado</li>
+                                    <li class="alert"><strong>18:00</strong> Eu sou um evento pendente</li>
+                                    <li class="info"><strong>19:00</strong> Eu sou um evento normal</li>
+                                </ul>
+                              </td>
+                            <td headers="sabado" class="fds">
+                                <span>8</span>
+                             </td>
+                        </tr>
+                        <tr>
+                            <td headers="domingo" class="fds">
+                                <span>9</span>
+                            </td>
+                            <td headers="segunda">
+                                <span>10</span>
+                                <ul>
+                                    <li class="success"><strong>08:00</strong> Eu sou um evento deferido com uma descrição muito grande, muito grande mesmo</li>
+                                    <li class="error"><strong>10:00</strong> Eu sou um evento cancelado</li>
+                                    <li class="alert"><strong>18:00</strong> Eu sou um evento pendente</li>
+                                    <li class="info"><strong>19:00</strong> Eu sou um evento normal</li>
+                                </ul>
+                            </td>
+                            <td headers="terca">
+                                <span>11</span>
+                                <ul>
+                                    <li class="success"><strong>08:00</strong> Eu sou um evento deferido</li>
+                                    <li class="error"><strong>10:00</strong> Eu sou um evento cancelado</li>
+                                    <li class="alert"><strong>18:00</strong> Eu sou um evento pendente</li>
+                                    <li class="info"><strong>19:00</strong> Eu sou um evento normal</li>
+                                </ul>
+                             </td>
+                            <td>
+                                <span>12</span>
+                                <ul>
+                                    <li class="success"><strong>08:00</strong> Eu sou um evento deferido</li>
+                                    <li class="error"><strong>10:00</strong> Eu sou um evento cancelado</li>
+                                    <li class="alert"><strong>18:00</strong> Eu sou um evento pendente</li>
+                                    <li class="info"><strong>19:00</strong> Eu sou um evento normal</li>
+                                </ul>
+                             </td>
+                            <td class="hoje">
+                                <span>13</span>
+                                <ul>
+                                    <li class="error"><strong>10:00</strong> Eu sou um evento cancelado</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <span>14</span>
+                                <ul>
+                                    <li class="success"><strong>08:00</strong> Eu sou um evento deferido</li>
+                                    <li class="error"><strong>10:00</strong> Eu sou um evento cancelado</li>
+                                    <li class="alert"><strong>18:00</strong> Eu sou um evento pendente</li>
+                                    <li class="info"><strong>19:00</strong> Eu sou um evento normal</li>
+                                </ul>
+                            </td>
+                            <td class="fds">
+                                <span>15</span>
+                                <ul>
+                                    <li class="alert"><strong>18:00</strong> Eu sou um evento pendente</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td headers="domingo" class="fds">
+                                <span>16</span>
+                             </td>
+                            <td headers="segunda">
+                                <span>17</span>
+                                <ul>
+                                    <li class="success"><strong>08:00</strong> Eu sou um evento deferido com uma descrição muito grande</li>
+                                    <li class="error"><strong>10:00</strong> Eu sou um evento cancelado</li>
+                                    <li class="alert"><strong>18:00</strong> Eu sou um evento pendente</li>
+                                    <li class="info"><strong>19:00</strong> Eu sou um evento normal</li>
+                                </ul>
+                             </td>
+                            <td headers="terca">
+                                <span>18</span>
+                                <ul>
+                                    <li class="success"><strong>08:00</strong> Eu sou um evento deferido com uma descrição muito grande</li>
+                                    <li class="error"><strong>10:00</strong> Eu sou um evento cancelado</li>
+                                    <li class="alert"><strong>18:00</strong> Eu sou um evento pendente</li>
+                                    <li class="info"><strong>19:00</strong> Eu sou um evento normal</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <span>19</span>
+                                <ul>
+                                    <li class="success"><strong>08:00</strong> Eu sou um evento deferido com uma descrição muito grande</li>
+                                    <li class="error"><strong>10:00</strong> Eu sou um evento cancelado</li>
+                                    <li class="alert"><strong>18:00</strong> Eu sou um evento pendente</li>
+                                    <li class="info"><strong>19:00</strong> Eu sou um evento normal</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <span>20</span>
+                                <ul>
+                                    <li class="success"><strong>08:00</strong> Eu sou um evento deferido com uma descrição muito grande</li>
+                                    <li class="error"><strong>10:00</strong> Eu sou um evento cancelado</li>
+                                    <li class="alert"><strong>18:00</strong> Eu sou um evento pendente</li>
+                                    <li class="info"><strong>19:00</strong> Eu sou um evento normal</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <span>21</span>
+                                <ul>
+                                    <li class="success"><strong>08:00</strong> Eu sou um evento deferido com uma descrição muito grande</li>
+                                    <li class="error"><strong>10:00</strong> Eu sou um evento cancelado</li>
+                                    <li class="alert"><strong>18:00</strong> Eu sou um evento pendente</li>
+                                    <li class="info"><strong>19:00</strong> Eu sou um evento normal</li>
+                                </ul>
+                            </td>
+                            <td class="fds">
+                                <span>22</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td headers="domingo" class="fds">
+                                <span>23</span>
+                            </td>
+                            <td headers="segunda">
+                                <span>24</span>
+                                <ul>
+                                    <li class="error"><strong>10:00</strong> Eu sou um evento cancelado</li>
+                                    <li class="info"><strong>19:00</strong> Eu sou um evento normal</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <span>25</span>
+                                <ul>
+                                    <li class="success"><strong>08:00</strong> Eu sou um evento deferido</li>
+                                    <li class="error"><strong>10:00</strong> Eu sou um evento cancelado</li>
+                                </ul>
+                             </td>
+                            <td>
+                                <span>26</span>
+                                <ul>
+                                    <li class="alert"><strong>18:00</strong> Eu sou um evento pendente</li>
+                                    <li class="info"><strong>19:00</strong> Eu sou um evento normal</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <span>27</span>
+                            </td>
+                            <td>
+                                <span>28</span>
+                            </td>
+                            <td class="fds">
+                                <span>29</span>
+                             </td>
+                        </tr>
+                        <tr>
+                            <td headers="domingo" class="fds">
+                                <span>30</span>
+                             </td>
+                            <td headers="segunda">
+                                <span>31</span>
+                                <ul>
+                                    <li class="info"><strong>19:00</strong> Eu sou um evento normal</li>
+                                </ul>
+                            </td>
+                            <td class="vazio">&nbsp;</td>
+                            <td class="vazio">&nbsp;</td>
+                            <td class="vazio">&nbsp;</td>
+                            <td class="vazio">&nbsp;</td>
+                            <td class="vazio">&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <h5>Código HTML</h5>
+
+<pre>
+&lt;div class="calendario calendario-mensal"&gt;
+    &lt;table&gt;
+        &lt;caption&gt;Janeiro&lt;/caption&gt;
+        &lt;thead&gt;
+            &lt;tr&gt;
+                &lt;th class="semana"&gt;Dom&lt;/th&gt;
+                &lt;th class="semana"&gt;Seg&lt;/th&gt;
+                &lt;th class="semana"&gt;Ter&lt;/th&gt;
+                &lt;th class="semana"&gt;Qua&lt;/th&gt;
+                &lt;th class="semana"&gt;Qui&lt;/th&gt;
+                &lt;th class="semana"&gt;Sex&lt;/th&gt;
+                &lt;th class="semana"&gt;Sáb&lt;/th&gt;
+            &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+            &lt;tr&gt;
+                &lt;td class="vazio"&gt;&amp;nbsp;&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;span&gt;1&lt;/span&gt;
+                &lt;/td&gt;
+                &lt;td&gt;
+                    &lt;span&gt;2&lt;/span&gt;
+                    &lt;ul&gt;
+                        &lt;li class="success"&gt;&lt;strong&gt;08:00&lt;/strong&gt; Eu sou um evento deferido&lt;/li&gt;
+                        &lt;li class="error"&gt;&lt;strong>10:00&lt;/strong&gt; Eu sou um evento cancelado&lt;/li&gt;
+                        &lt;li class="info"&gt;&lt;strong>19:00&lt;/strong&gt; Eu sou um evento normal&lt;/li&gt;
+                        &lt;li class="alert"&gt;&lt;strong>22:00&lt;/strong&gt; Eu sou um evento pendente&lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/td&gt;
+                &lt;td&gt;
+                    &lt;span&gt;3&lt;/span&gt;
+                &lt;/td&gt;
+                &lt;td class="feriado"&gt;
+                    &lt;span&gt;4&lt;/span&gt;
+                &lt;/td&gt;
+                &lt;td class="recesso evento"&gt;
+                    &lt;span&gt;5&lt;/span&gt;
+                &lt;/td&gt;
+                &lt;td class="evento"&gt;
+                    &lt;span&gt;6&lt;/span&gt;
+                &lt;/td&gt;
+           &lt;/tr&gt;
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+&lt;/div&gt;
+</pre>
+    
+    
+    
+    
+    {% endbox %}
+</div>
+
+<div class="com_ancora" id="guia-11-8">
+    {% box "Timeline" %}
+        <div class="legenda">
+            <p>Legenda:</p>
+            <ul>
+                <li class="hoje">Hoje</li>
+                <li class="info">Informação</li>
+                <li class="success">Sucesso</li>
+                <li class="alert">Alerta</li>
+                <li class="error">Erro</li>
+                <li class="extra">Extra</li>
+            </ul>
+        </div>
+        <ul class="timeline">
+            <li class="success">
+                <div class="timeline-date">14/02/2012</div>
+                <div class="timeline-icon"></div>
+                <div class="timeline-content">
+                    <h4>Lorem Ipsum</h4>
+                    <p>Lorem Ipsum</p>
+                    <p>Lorem Ipsum</p>
+                    <dl>
+                        <dt>Lorem Ipsum:</dt>
+                        <dd>Lorem Ipsum</dd>
+                        <dt>Lorem Ipsum:</dt>
+                        <dd>Lorem Ipsum</dd>
+                    </dl>
+                </div>
+            </li>
+            <li>
+                <div class="timeline-date">14/02/2012</div>
+                <div class="timeline-icon"></div>
+                <div class="timeline-content">
+                    <div class="success">
+                        <h4>Lorem Ipsum</h4>
+                        <p>Lorem Ipsum</p>
+                        <p>Lorem Ipsum</p>
+                        <dl>
+                            <dt>Lorem Ipsum:</dt>
+                            <dd>Lorem Ipsum</dd>
+                            <dt>Lorem Ipsum:</dt>
+                            <dd>Lorem Ipsum</dd>
+                        </dl>
+                    </div>
+                    <div class="info">
+                        <h4>Lorem Ipsum</h4>
+                        <p>Lorem Ipsum</p>
+                        <p>Lorem Ipsum</p>
+                        <dl>
+                            <dt>Lorem Ipsum:</dt>
+                            <dd>Lorem Ipsum</dd>
+                            <dt>Lorem Ipsum:</dt>
+                            <dd>Lorem Ipsum</dd>
+                        </dl>
+                    </div>
+                    <div class="error">
+                        <h4>Lorem Ipsum</h4>
+                        <p>Lorem Ipsum</p>
+                        <p>Lorem Ipsum</p>
+                        <dl>
+                            <dt>Lorem Ipsum:</dt>
+                            <dd>Lorem Ipsum</dd>
+                            <dt>Lorem Ipsum:</dt>
+                            <dd>Lorem Ipsum</dd>
+                        </dl>
+                    </div>
+                </div>
+            </li>
+            <li class="alert">
+                <div class="timeline-date">14/02/2012</div>
+                <div class="timeline-icon"></div>
+                <div class="timeline-content">
+                    <h4>Lorem Ipsum</h4>
+                    <p>Lorem Ipsum</p>
+                    <p>Lorem Ipsum</p>
+                    <dl>
+                        <dt>Lorem Ipsum:</dt>
+                        <dd>Lorem Ipsum</dd>
+                        <dt>Lorem Ipsum:</dt>
+                        <dd>Lorem Ipsum</dd>
+                    </dl>
+                </div>
+            </li>
+            <li class="extra">
+                <div class="timeline-date">14/02/2012</div>
+                <div class="timeline-icon"></div>
+                <div class="timeline-content">
+                    <div class="extra">
+                        <h4>Lorem Ipsum</h4>
+                        <dl>
+                            <dt>Lorem Ipsum:</dt>
+                            <dd>Lorem Ipsum</dd>
+                            <dt>Lorem Ipsum:</dt>
+                            <dd>Lorem Ipsum</dd>
+                        </dl>
+                    </div>
+                </div>
+            </li>
+            <li class="info">
+                <div class="timeline-date">14/02/2012</div>
+                <div class="timeline-icon"></div>
+                <div class="timeline-content">
+                    <h4>Lorem Ipsum</h4>
+                    <dl>
+                        <dt>Lorem Ipsum:</dt>
+                        <dd>Lorem Ipsum</dd>
+                        <dt>Lorem Ipsum:</dt>
+                        <dd>Lorem Ipsum</dd>
+                    </dl>
+                </div>
+            </li>
+            <li class="error">
+                <div class="timeline-date">14/02/2012</div>
+                <div class="timeline-icon"></div>
+                <div class="timeline-content">
+                    <h4>Lorem Ipsum</h4>
+                    <dl>
+                        <dt>Lorem Ipsum:</dt>
+                        <dd>Lorem Ipsum</dd>
+                        <dt>Lorem Ipsum:</dt>
+                        <dd>Lorem Ipsum</dd>
+                    </dl>
+                </div>
+            </li>
+            <li>
+                <div class="timeline-date">14/02/2012</div>
+                <div class="timeline-icon"></div>
+                <div class="timeline-content">
+                    <div class="alert">
+                        <h4>Lorem Ipsum</h4>
+                        <p>Lorem Ipsum</p>
+                        <p>Lorem Ipsum</p>
+                        <dl>
+                            <dt>Lorem Ipsum:</dt>
+                            <dd>Lorem Ipsum</dd>
+                            <dt>Lorem Ipsum:</dt>
+                            <dd>Lorem Ipsum</dd>
+                        </dl>
+                    </div>
+                    <div class="extra">
+                        <h4>Lorem Ipsum</h4>
+                        <p>Lorem Ipsum</p>
+                        <p>Lorem Ipsum</p>
+                        <dl>
+                            <dt>Lorem Ipsum:</dt>
+                            <dd>Lorem Ipsum</dd>
+                            <dt>Lorem Ipsum:</dt>
+                            <dd>Lorem Ipsum</dd>
+                        </dl>
+                    </div>
+                </div>
+            </li>
+            <li class="default">
+                <div class="timeline-date">Hoje</div>
+                <div class="timeline-icon"></div>
+                <div class="timeline-content">
+                    <h4>Lorem Ipsum</h4>
+                </div>
+            </li>
+        </ul>
+
+        <h5>Código HTML</h5>
+
+<pre>
+&lt;ul class="timeline"&gt;
+    &lt;li&gt;
+        &lt;div class="timeline-date"&gt;02/06/2014&lt;/div&gt;
+        &lt;div class="timeline-icon"&gt;&lt;/div&gt;
+        &lt;div class="timeline-content"&gt;
+            &lt;h4&gt;Lorem Ipsum&lt;/h4&gt;
+            &lt;p&gt;Lorem Ipsum&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+</pre>
+    
+    {% endbox %}
+</div>
+
+<div class="com_ancora" id="guia-11-9">
+    {% box "Timeline Horizontal" %}
+        <table class="timeline-horizontal">
+            <thead>
+                <tr>
+                    <th>Históricos Funcionais</th>
+                    <th><span>12/01<strong>2014</strong></span></th>
+                    <th><span>13/02<strong>2014</strong></span></th>
+                    <th><span>14/03<strong>2014</strong></span></th>
+                    <th><span>15/04<strong>2014</strong></span></th>
+                    <th><span>16/05<strong>2014</strong></span></th>
+                    <th><span>17/06<strong>2014</strong></span></th>
+                    <th><span>18/07<strong>2014</strong></span></th>
+                    <th>
+                        <span>19/08<strong>2014</strong></span>
+                        <span class="final">19/08<strong>2014</strong></span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr title="COSINF">
+                    <td>COSINF</td>
+                    <td class="default"></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                </tr>
+                <tr title="REITORIA">
+                    <td>REITORIA</td>
+                    <td class=""></td>
+                    <td class="default"></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                </tr>
+                <tr title="DIAREN">
+                    <td>DIAREN</td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class="default"></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class="default"></td>
+                    <td class=""></td>
+                </tr>
+                <tr title="">
+                    <td>DIGAE</td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class="default"></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                </tr>
+                <tr title="COSINF">
+                    <td>COSINF</td>
+                    <td class="default"></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                </tr>
+                <tr title="REITORIA">
+                    <td>REITORIA</td>
+                    <td class=""></td>
+                    <td class="default"></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                </tr>
+                <tr title="DIAREN">
+                    <td>DIAREN</td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class="default"></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class="default"></td>
+                    <td class=""></td>
+                </tr>
+                <tr title="DIGAE">
+                    <td>DIGAE</td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class="default"></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                    <td class=""></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h5>Código HTML</h5>
+
+<pre>
+&lt;table class="timeline-horizontal"&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;Título&lt;/th&gt;
+            &lt;th&gt;&lt;span&gt;02/06&lt;strong&gt;2014&lt;/strong&gt;&lt;/span&gt;&lt;/th&gt;
+            &lt;th&gt;&lt;span&gt;02/06&lt;strong&gt;2014&lt;/strong&gt;&lt;/span&gt;&lt;/th&gt;
+            &lt;th&gt;
+                &lt;span&gt;02/06&lt;strong&gt;2014&lt;/strong&gt;&lt;/span&gt;
+                &lt;span class="final"&gt;02/06&lt;strong&gt;2014&lt;/strong&gt;&lt;/span&gt;
+            &lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr title="Item 1"&gt;
+            &lt;td&gt;Item 1&lt;/td&gt;
+            &lt;td class="default"&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr title="Item 2"&gt;
+            &lt;td&gt;Item 2&lt;/td&gt;
+            &lt;td&gt;&lt;/td&gt;
+            &lt;td class="default"&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr title="Item 3"&gt;
+            &lt;td&gt;Item 3&lt;/td&gt;
+            &lt;td&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;/td&gt;
+            &lt;td class="default"&gt;&lt;/td&gt;
+        &lt;/tr&gt;    
+    &lt;/tbody&gt;
+&lt;/table&gt;
+</pre>
+    
+    {% endbox %}
+</div>
+
+<div class="com_ancora" id="guia-11-2">
+    {% box "Tela Master/Detail" %}
+        <h5>Código HTML</h5>
+
+<pre>
+&lt;h2&gt;Master&lt;/h2&gt;
+
+&lt;!-- Aqui ficam as informações de nível master --&gt;
+
+&lt;h3&gt;Itens&lt;/h3&gt;
+
+&lt;!-- Barra de ações com o link para adicionar novo item --&gt;
+&lt;ul class="action-bar"&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Adicionar item&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!-- Aqui deve ser inserido o formulário de adição de novo item --&gt;
+
+&lt;!-- Tabela que lista somente os itens adicionados --&gt;
+&lt;table&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;#&lt;/th&gt;
+            &lt;th&gt;Itens&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;1&lt;/td&gt;
+            &lt;td&gt;Adipiscing&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;2&lt;/td&gt;
+            &lt;td&gt;Est elit&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;3&lt;/td&gt;
+            &lt;td&gt;In bibendum&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;div class="submit-row"&gt;
+    &lt;input class="btn default" type="submit" value="Salvar" /&gt;
+&lt;/div&gt;
+</pre>
+
+    {% endbox %}
+</div>
+
+<div class="com_ancora" id="guia-8">
+    {% box "Acessibilidade" %}
+        <p>Conheça as diretrizes de Acessibilidade que todos os sites e portais do Governo Federal devem seguir: <a href="http://www.governoeletronico.gov.br/acoes-e-projetos/e-MAG">http://www.governoeletronico.gov.br/acoes-e-projetos/e-MAG</a>.</p>
+    {% endbox %}
+</div>
+
+{% endblock %}

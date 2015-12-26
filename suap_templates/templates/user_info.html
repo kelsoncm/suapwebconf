@@ -1,0 +1,18 @@
+<div id="popup-user-container-{{ profile.id }}" class="popup-user-container">
+    <h4>{{ nome|normalizar }}</h4>
+    <img alt="{{ nome|normalizar }}" src="{{ foto }}" />
+    <p>
+        {% if profile.sub_instance.get_absolute_url %}
+            <a href="{{ profile.sub_instance.get_absolute_url }}">{{ profile.username }}</a>
+        {% else %}
+            {{ profile.username }}
+        {% endif %}
+    </p>
+    <p>{{ cargo }}</p>
+    {% if setor %}
+        <p>
+            <a href="/comum/setor/{{ setor.id }}/">{{ setor }} {{ campus }}</a>
+        </p>
+    {% endif %}
+    <p><a href="mailto:{{ email }}">{{ email }}</a></p>
+</div>

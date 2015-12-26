@@ -1,0 +1,15 @@
+{% extends super_template %}
+
+{% block content %}
+
+<h2> {{ titulo }} </h2>
+ 
+<ul class="action-bar">
+	{% if link_pdf %}
+        <li><a href="{{ link_pdf }}">Versão PDF</a></li>
+    {% endif %}
+</ul>
+
+{{ elementos|safe }}
+
+{% endblock %}

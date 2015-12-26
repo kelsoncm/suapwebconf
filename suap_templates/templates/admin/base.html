@@ -1,0 +1,225 @@
+<!DOCTYPE HTML>
+<html lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+<title>{{ title }} - {% block title %}SUAP: Sistema Unificado de Administração Pública{% endblock %}</title>
+<meta charset="utf-8">
+<meta name="keywords" content="suap, administração, pública, mec, ifrn">
+<meta content="SUAP: Sistema Unificado de Administração Pública" name="description">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE">{% endblock %}
+
+{# Favicon #}
+<link rel="shortcut icon" href="/static/comum/img/{% block favicon %}favicon.png{% endblock %}" />
+
+<link rel="stylesheet" href="/static/djtools/jquery-1.6.2/css/jquery.ui.all.css" />
+<link rel="stylesheet" href="/static/djtools/jquery-1.6.2/css/jquery.ui.core.css" />
+<link rel="stylesheet" href="/static/djtools/jquery-1.6.2/css/jquery.ui.datepicker.css" />
+<link rel="stylesheet" href="/static/djtools/jquery-1.6.2/css/jquery.ui.theme.css" />
+
+{# Widgets #}
+<link rel="stylesheet" href="/static/djtools/jquery/jquery.autocomplete.css" />
+<link rel="stylesheet" href="/static/djtools/jstree/tree_component.css" />
+
+{# Djtools #}
+<link rel="stylesheet" href="/static/djtools/css/main.css" />
+<link rel="stylesheet" href="/static/djtools/css/icons.css" />
+
+{# CSS SUAP #}
+<link rel="stylesheet" href="/static/comum/css/hint.min.css" />
+<link rel="stylesheet" href="/static/comum/css/estilo.css" />
+<link rel="stylesheet" href="/static/comum/css/forms.css" />
+
+{% block extracss %}{% endblock %}
+
+{# jQuery #}
+<script src="/static/comum/js/jquery.min.js"></script>
+
+{# Tinybox #}
+<link rel="stylesheet" href="/static/djtools/tinybox/tinybox.css" />
+<script src="/static/djtools/tinybox/tinybox.js"></script>
+
+{# jQuery UI [Ui Core: All, Interactions: All, Widgets: DatePicker, Effects: All] #}
+<script src="/static/comum/js/jquery.ui.custom.min.js"></script>
+<script src="/static/comum/js/jquery.ui.datepicker-pt-BR.js"></script>
+
+{# jQuery autocomplete #}
+<script src="/static/comum/deprecated/js/jquery.autocomplete.js"></script>
+
+{# Usado apenas na validação ajax #}
+<script src="/static/comum/deprecated/js/jquery.form.js"></script>
+<script src="/static/comum/js/main.js"></script>
+<script src="/static/comum/deprecated/js/mascaras.js"></script>
+<script src="/static/comum/deprecated/js/auxiliar.js"></script>
+<script src="/static/comum/deprecated/js/suap.basico.js"></script>
+
+{# Componentes SUAP #}
+<script src="/static/djtools/box/js/box.js"></script>
+
+{% if id_ %}
+    <script>
+        $(window).unload(function(){
+            $.ajax({
+                type: "POST",
+                url: "/apagar_chave_sessao/{{ id_ }}/",
+            });
+        });
+    </script>
+{% endif %}
+
+{# Adição das medias dos forms do contexto #}
+{% if forms_media %}
+    {{ forms_media|safe }}
+{% endif %}
+
+{% block extrahead %}{% endblock %}
+{% block head %}{% endblock %}
+</head>
+
+<body class="{% if is_popup %} popup {% endif %}{% block bodyclass %}{% endblock %}{% if debug %} debug {% endif %}{% if request.session.retraido %} hideSidebar {% endif %}">
+
+<div class="holder">
+    
+    <aside>
+        <header>   
+            <h1><a href="/" title="SUAP: Sistema Unificado de Administração Pública">SUAP</a></h1>
+            <a href="#" id="acoes" class="toggleSidebar">Mostrar/Esconder barra lateral</a>
+            {% if not is_popup %}   
+                {% if user.is_authenticated %}
+                    <div id="user-tools">
+                        {% if user.get_profile.funcionario.servidor %}
+                            <a href="/rh/servidor/{{ user.username }}/">
+                                <img src="{{ user.get_profile.pessoafisica.get_foto_75x100_url }}" alt="{{ user.get_profile.nome_usual|default:user.username|normalizar }}" />
+                                {{ user.get_profile.nome_usual|default:user.username|normalizar }}
+                            </a>
+                        {% elif user.get_profile.sub_instance_title == 'Aluno' %}
+                            <a href="{{ user.get_profile.sub_instance.get_absolute_url }}">
+                                <img src="{{ user.get_profile.pessoafisica.get_foto_75x100_url }}" alt="{{ user.get_profile.nome_usual|default:user.username|normalizar }}" />
+                                {{ user.get_profile.nome_usual|default:user.username|normalizar }}
+                            </a>
+                        {% else %}
+                            <div>
+                                <img src="{{ user.get_profile.pessoafisica.get_foto_75x100_url }}" alt="{{ user.get_profile.nome_usual|default:user.username|normalizar }}" />
+                                <p>{{ user.get_profile.nome_usual|default:user.username|normalizar }}</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endif %}
+        </header>
+        {% if not is_popup %}
+            {% if user.is_authenticated %}
+                <form id="__buscar_menu__" action="" onsubmit="return false;">
+                    <input type="text" placeholder="Buscar Item de Menu" id="__filterinput__" {% block buscar_menu %}{% endblock %} />
+                </form>
+                <nav>
+                    <ul id="lista-menu-lateral">
+                        <li class="menu-home"><a href="/">Início</a></li>
+                        {{ menu_as_html|safe }}
+                        <li class="menu-logout"><a href="/accounts/logout/">Sair</a></li>
+                    </ul>
+                </nav>
+            {% endif %}
+        {% endif %}
+    </aside>
+
+    <article {% block coltype %}class="colM"{% endblock %} id="content">
+
+        <div id="breadcrumbs">
+            {% for title, url in breadcrumbs %}
+              <a href="{{ url }}">{{ title }}</a> {% if not forloop.last %} &nbsp;»&nbsp; {% endif %} 
+            {% endfor %}
+        </div>
+        
+        {% block content_title %}
+            {% if title %}<h2>{{ title|escape }}</h2>{% endif %}
+        {% endblock %}
+
+        {# mensagens de sucesso #}
+        {% if messages %}
+            {% for message in messages %}
+            <p class="msg {{ message.tags }}" id="feedback_message">
+                {{ message|safe }}
+            </p>
+            {% endfor %}
+        {% endif %}
+        
+        {# erros de validação #}
+        {% if error_message %}
+            <p class="errornote">{{ error_message }}</p>
+        {% endif %}
+        
+        {% block content %}
+            {% block object-tools %}{% endblock %}
+            {{ content }}
+        {% endblock %}
+        
+        <div class="action-links">
+            <ul>
+                <li class="float-right">
+                    <a href="#" id="topodapagina">Topo da página</a>
+                </li>
+                <li class="float-right action-print">
+                    <a href="#">Imprimir</a>
+                </li>
+                {% block action-links %}{% endblock %}
+            </ul>
+        </div>
+
+    </article>
+
+</div>
+
+<footer>
+    <ul>
+        <li>
+            Administração
+            <p><a href="mailto:digti@ifrn.edu.br">digti@ifrn.edu.br</a></p>
+        </li>
+        <li>
+            Desenvolvimento
+            <p><a href="http://portal.ifrn.edu.br">IFRN</a></p>
+        </li>
+        <li class="float-right">
+            <a href="http://www.djangoproject.com/"><img src="/static/comum/img/django.gif" alt="Feito com Django" /></a>
+        </li>
+    </ul>
+    {% block footer %}{% endblock %}
+</footer>
+
+{% if debug %}
+    <div id="debug"><strong>DEBUG</strong> | {% debug_info %}</div>
+{% endif %}
+
+<script>
+    open_menu_item("{{ menu_item_id }}");
+    $(window).unload(function(){
+        $('input[type=submit]').removeAttr('disabled');
+    });
+
+    {% if not prevent_multiple_form_submit %}
+        $("input[type=submit]").on("click", function() {
+            var elem = $(this);
+            var form = $(this.form);
+
+            //Se tiver a função checkValidity verificar se está tudo ok, nas validações html5, para não desabilitar o botão de submit
+            if(typeof form[0].checkValidity === 'function') {
+                if (form[0].checkValidity()) {
+                    elem.parent().find("input[type=submit]").attr("disabled", "disabled");
+                    elem.val("Aguarde...");
+                }
+            } else {
+                elem.parent().find("input[type=submit]").attr("disabled", "disabled");
+                elem.val("Aguarde...");
+            }
+
+            if (elem.attr("name")) {
+                elem.parent().append('<input type="hidden" name="'+elem.attr("name")+'" value="'+elem.val()+'" />');
+            }
+
+            form.find(".selector-chosen select[multiple] option").attr("selected", "selected");
+            form.submit();
+        });
+    {% endif %}
+</script>
+</body>
+</html>
