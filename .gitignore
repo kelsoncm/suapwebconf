@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 
 suap_templates
+djtools
  
 # C extensions
 *.so

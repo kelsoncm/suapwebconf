@@ -1,10 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-Oi.
-</body>
-</html>
+{% extends "admin/base.html" %}
+{% block content %}
+    <table>
+        <thead>
+            <tr>
+                <th>Evento</th>
+                <th>Quando</th>
+                <th>Sala</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for evento in eventos_hoje %}
+                <tr>
+                    <td><a href="{% url 'webconf_acessar' evento.id %}">{{ evento.nome }}</a></td>
+                    <td>{{ evento.data_evento }} entre {{ evento.hora_inicio }} e {{ evento.hora_termino }} </td>
+                    <td>{{ evento.sala.nome }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3" class="msg info">Não existem eventos para hoje</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

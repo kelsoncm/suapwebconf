@@ -28,11 +28,11 @@ __author__ = 'Kelson da Costa Medeiros <kelsoncm@gmail.com>'
 
 
 class Sala(models.Model):
-    TIPO_VIRTUAL = 'Virtual'
-    TIPO_FISICA = 'Fisica'
+    TIPO_RNP = 'RNP'
+    TIPO_POLYCON = 'PolyCon'
     TIPO_CHOICES = (
-        (TIPO_VIRTUAL, TIPO_VIRTUAL),
-        (TIPO_FISICA, TIPO_FISICA)
+        (TIPO_RNP, TIPO_RNP),
+        (TIPO_POLYCON, TIPO_POLYCON)
     )
 
     tipo = models.CharField('Tipo de sala', choices=TIPO_CHOICES, max_length=10, null=False, blank=False)
@@ -50,12 +50,12 @@ class Sala(models.Model):
 
 
 class Evento(models.Model):
-    AUTENTICACAO_LDAP = 'LDAP'
+    # AUTENTICACAO_LDAP = 'LDAP'
     AUTENTICACAO_SUAP = 'SUAP'
     AUTENTICACAO_MANUAL = 'Manual'
     AUTENTICACAO_ANONIMO = 'Anonimo'
     AUTENTICACAO_CHOICES = (
-        (AUTENTICACAO_LDAP, AUTENTICACAO_LDAP),
+        # (AUTENTICACAO_LDAP, AUTENTICACAO_LDAP),
         (AUTENTICACAO_SUAP, AUTENTICACAO_SUAP),
         (AUTENTICACAO_MANUAL, AUTENTICACAO_MANUAL),
         (AUTENTICACAO_ANONIMO, AUTENTICACAO_ANONIMO),
@@ -80,10 +80,9 @@ class Evento(models.Model):
 
 class Participante(models.Model):
     evento = models.ForeignKey(Evento, verbose_name='Evento', null=False)
-    nome = models.CharField('Nome', max_length=255, null=False, blank=False)
-    login = models.CharField('Login', max_length=255, null=False, blank=False)
-    password = models.CharField('Senha', max_length=255, null=False, blank=False)
-    identificacao = models.CharField('CPF/Matricula', max_length=255, null=True, blank=True)
+    nome = models.CharField('Nome completo', max_length=255, null=False, blank=False)
+    username = models.CharField('Nome do usuário', max_length=255, null=False, blank=False)
+    password = models.CharField('Senha', max_length=255, null=True, blank=True)
     email = models.CharField('Email', max_length=255, null=True, blank=True)
     celular = models.CharField('Celular', max_length=255, null=True, blank=True)
 

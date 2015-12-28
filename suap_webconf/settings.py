@@ -14,6 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_PATH = BASE_DIR
 
 
 # Quick-start development settings - unsuitable for production
@@ -48,6 +49,7 @@ THIRD_APPS = [
 ]
 
 MY_APPS = [
+    'djtools',
     'suap_templates',
     'suap_webconf',
 ]
@@ -55,7 +57,7 @@ MY_APPS = [
 INSTALLED_APPS = MY_APPS + DEFAULT_APPS + THIRD_APPS
 
 MIDDLEWARE_CLASSES = [
-    'django.middleware.security.SecurityMiddleware',
+    # 'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',

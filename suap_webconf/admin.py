@@ -49,7 +49,7 @@ class EventoAdmin(admin.ModelAdmin):
 
 
 class ParticipanteAdmin(admin.ModelAdmin):
-    list_display = ['nome', 'evento', 'login', 'identificacao', 'email', 'celular', ]
+    list_display = ['nome', 'evento', 'username', 'email', 'celular', ]
     list_filter = ('evento__nome', )
 
     def show_url(self, obj):

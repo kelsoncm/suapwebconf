@@ -1,0 +1,18 @@
+{% extends "webconf/formulario.html" %}
+{% block formulario_webconf %}
+    <h4>Formulário para acesso manual</h4>
+    <form id="form_webconf" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p>
+            <br/> <a id="acessar" class="btn success">Acessar</a>
+        </p>
+    </form>
+    <script>
+        $(function () {
+          $('#acessar').click(function() {
+              $('#form_webconf').submit();
+          });
+        });
+    </script>
+{% endblock formulario_webconf %}

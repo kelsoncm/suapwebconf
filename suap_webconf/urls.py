@@ -23,11 +23,15 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from suap_webconf.views import webconf_index, webconf_acessar
+
 
 __author__ = 'Kelson da Costa Medeiros <kelsoncm@gmail.com>'
+
 
 urlpatterns = [
     # url(r'^django-sb-admin/', include('django_sb_admin.urls')),
     url(r'^admin/', admin.site.urls),
-    url(r'^webconf/', 'suap_webconf.views.webconf_index'),
+    url(r'^webconf/$', webconf_index, name='webconf_index'),
+    url(r'^webconf/(?P<id>\w+)/$', webconf_acessar, name='webconf_acessar', ),
 ]

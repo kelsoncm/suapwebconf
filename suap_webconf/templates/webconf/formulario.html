@@ -1,0 +1,27 @@
+{% extends "admin/base.html" %}
+{% block content %}
+
+    <h2>Dados do evento</h2>
+
+    <dl>
+
+        <dt>O quê: </dt>
+        <dd>{{ evento.nome }}</dd>
+
+        <dt>Quando: </dt>
+        <dd>Entre <b>{{ evento.hora_inicio }}</b> e <b>{{ evento.hora_termino }}</b></dd>
+
+        <dt>Onde: </dt>
+        <dd>{{ evento.sala.nome }}</dd>
+
+    </dl>
+    <p class="msg info">
+        Mesmo que o link de acesso esteja disponível não significa que o evento esteja ocorrendo, assim, confira o
+        horário (entre <b>{{ evento.hora_inicio }}</b> e <b>{{ evento.hora_termino }}</b>), além disso se certifique
+        que o evento tenha iniciado dado que em função de restrições técnica pode não estar ocorrendo.
+    </p>
+
+    {% block formulario_webconf %}
+    {% endblock formulario_webconf %}
+
+{% endblock content %}

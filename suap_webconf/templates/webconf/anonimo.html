@@ -1,0 +1,31 @@
+{% extends "webconf/formulario.html" %}
+{% block formulario_webconf %}
+    <h2>Formas de acesso</h2>
+
+    {% if request.user.is_authenticated %}
+    <h4>SUAP</h4>
+    <form id="form_suap" method="POST">
+        {% csrf_token %}
+        <p><input name="use" value="suap" type="hidden" /></p>
+        <p><a id="link_suap" class="btn success">Acessar usando meus dados do SUAP</a></p>
+    </form>
+    {% endif %}
+
+    <h4>Formulário para acesso manual</h4>
+    <form id="form_form" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p><br/> <a id="link_form" class="btn success">Acessar usando os dados do formulário</a></p>
+    </form>
+
+    <script>
+        $(function() {
+            $('#link_form').click(function() {
+                $('#form_form').submit();
+            });
+            $('#link_suap').click(function() {
+                $('#form_suap').submit();
+            });
+        });
+    </script>
+{% endblock formulario_webconf %}
