@@ -88,18 +88,18 @@
                     <div id="user-tools">
                         {% if user.get_profile.funcionario.servidor %}
                             <a href="/rh/servidor/{{ user.username }}/">
-                                <img src="{{ user.get_profile.pessoafisica.get_foto_75x100_url }}" alt="{{ user.get_profile.nome_usual|default:user.username|normalizar }}" />
-                                {{ user.get_profile.nome_usual|default:user.username|normalizar }}
+                                <img src="{{ user.get_profile.pessoafisica.get_foto_75x100_url }}" alt="{{ user.get_profile.nome_usual|default:user.username }}" />
+                                {{ user.get_profile.nome_usual|default:user.username }}
                             </a>
                         {% elif user.get_profile.sub_instance_title == 'Aluno' %}
                             <a href="{{ user.get_profile.sub_instance.get_absolute_url }}">
-                                <img src="{{ user.get_profile.pessoafisica.get_foto_75x100_url }}" alt="{{ user.get_profile.nome_usual|default:user.username|normalizar }}" />
-                                {{ user.get_profile.nome_usual|default:user.username|normalizar }}
+                                <img src="{{ user.get_profile.pessoafisica.get_foto_75x100_url }}" alt="{{ user.get_profile.nome_usual|default:user.username }}" />
+                                {{ user.get_profile.nome_usual|default:user.username }}
                             </a>
                         {% else %}
                             <div>
-                                <img src="{{ user.get_profile.pessoafisica.get_foto_75x100_url }}" alt="{{ user.get_profile.nome_usual|default:user.username|normalizar }}" />
-                                <p>{{ user.get_profile.nome_usual|default:user.username|normalizar }}</p>
+                                <img src="{{ user.get_profile.pessoafisica.get_foto_75x100_url }}" alt="{{ user.get_profile.nome_usual|default:user.username }}" />
+                                <p>{{ user.get_profile.nome_usual|default:user.username }}</p>
                             </div>
                         {% endif %}
                     </div>
@@ -186,10 +186,10 @@
     {% block footer %}{% endblock %}
 </footer>
 
-{% if debug %}
-    <div id="debug"><strong>DEBUG</strong> | {% debug_info %}</div>
-{% endif %}
-
+{#{% if debug %}#}
+{#    <div id="debug"><strong>DEBUG</strong> | {% debug_info %}</div>#}
+{#{% endif %}#}
+{##}
 <script>
     open_menu_item("{{ menu_item_id }}");
     $(window).unload(function(){

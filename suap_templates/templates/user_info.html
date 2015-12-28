@@ -1,6 +1,6 @@
 <div id="popup-user-container-{{ profile.id }}" class="popup-user-container">
-    <h4>{{ nome|normalizar }}</h4>
-    <img alt="{{ nome|normalizar }}" src="{{ foto }}" />
+    <h4>{{ nome }}</h4>
+    <img alt="{{ nome }}" src="{{ foto }}" />
     <p>
         {% if profile.sub_instance.get_absolute_url %}
             <a href="{{ profile.sub_instance.get_absolute_url }}">{{ profile.username }}</a>
