@@ -20,7 +20,7 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 # @author 'Kelson da Costa Medeiros <kelsoncm@gmail.com>'
-Django==1.9
+Django==1.11.29
 ipython
 django-extensions
 suap_djtools
